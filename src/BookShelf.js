@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 class BookShelf extends Component {
   render(){
     return(
-      <div>BookShelf</div>
+      <div>BookShelf
+        <Link
+          to='/search'
+          >Search</Link>
+      </div>
     )
   }
 }
