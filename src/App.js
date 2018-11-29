@@ -31,15 +31,17 @@ class App extends Component {
               <div className='my-icon-img'/>
             </div>
           </div>
-          <Route exact path='/' render={() =>(
-            <BookShelf/>
-          )}/>
-          <Route
-            exact path='/search'
-            render={() => (
-              <Search
-              books= { this.state.books }/>
+          <div className='body'>
+            <Route exact path='/' render={() =>(
+              <BookShelf/>
             )}/>
+            <Route
+              exact path='/search'
+              render={() => (
+                <Search
+                books= { this.state.books }/>
+            )}/>
+          </div>
         </div>
       </div>
     );

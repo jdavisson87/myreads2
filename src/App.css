@@ -20,11 +20,28 @@
 
 .head {
   height: 30%;
+  width: 100%;
   display: block;
   position: fixed;
   top: 0px;
   right:auto;
   left:auto;
+  background-image: linear-gradient(to right, #282c34, #2d79c6);
+}
+
+.head h1 {
+  font-family: palatino, cursive;
+  font-size: 75px;
+}
+
+.body {
+  height: 70%;
+  width: 100%;
+  display: block;
+  position: fixed;
+  bottom: 0px;
+  right: auto;
+  left: auto;
 }
 
 .App-link {
@@ -38,7 +55,7 @@
 
 .my-icon {
   position: fixed;
-  top: 10px;
+  top: 20px;
   right: 25px;
   display: block;
 }
@@ -46,12 +63,17 @@
 .my-icon-img {
   background: url('./icons/icon.svg');
   background-size: 100%;
-  width: 170px;
-  height: 170px;
+  width: 190px;
+  height: 190px;
   background-repeat: no-repeat;
 }
 
 .search {
+  width: 100%;
+  padding-top: 40px;
+}
+
+.search input {
   width: 80%;
 }
 
@@ -83,6 +105,10 @@
   border-radius: 50%;
   background: #61dafb;
   background-image: url('./icons/add.svg');
+}
+
+.book {
+  list-style: none;
 }
 
 @keyframes App-logo-spin {
