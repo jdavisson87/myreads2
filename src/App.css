@@ -22,6 +22,15 @@
   color: #61dafb;
 }
 
+.query {
+  font-size: 30px;
+  width: 100%;
+}
+
+.search {
+  width: 80%;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
