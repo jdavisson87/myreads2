@@ -7,7 +7,7 @@
   height: 40vmin;
 }
 
-.App-header {
+.main {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -16,6 +16,14 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.head {
+  display: block;
+  position: fixed;
+  top: 10px;
+  right:auto;
+  left:auto;
 }
 
 .App-link {
@@ -27,8 +35,54 @@
   width: 100%;
 }
 
+.my-icon {
+  position: fixed;
+  top: 10px;
+  right: 25px;
+  display: block;
+}
+
+.my-icon-img {
+
+  background: url('./icons/icon.svg');
+  background-size: 100%;
+  width: 170px;
+  height: 170px;
+  background-repeat: no-repeat;
+}
+
 .search {
   width: 80%;
+}
+
+.search-icon {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+}
+
+.search-icon a {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #61dafb;
+  background-image: url('./icons/add.svg');
+}
+
+.home-icon {
+  position: fixed;
+  left: 20px;
+  top: 20px;
+}
+
+.home-icon a {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #61dafb;
+  background-image: url('./icons/add.svg');
 }
 
 @keyframes App-logo-spin {

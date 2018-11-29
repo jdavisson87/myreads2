@@ -10,9 +10,11 @@ class Search extends Component {
         <ol className='book'>
           <Book books={this.props.books}/>
         </ol>
-        <Link
-          to='/'
-          >Home</Link>
+        <div className='home-icon'>
+          <Link
+            to='/'
+          />
+        </div>
       </div>
     )
   }

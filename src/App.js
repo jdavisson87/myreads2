@@ -20,20 +20,27 @@ class App extends Component {
       this.setState({ books })
     })
   }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-        <Route exact path='/' render={() =>(
-          <BookShelf/>
-        )}/>
-        <Route
-          exact path='/search'
-          render={() => (
-            <Search
-            books= { this.state.books }/>
+        <div className="main">
+          <div className='head'>
+            <h1>My Reads 2.0</h1>
+            <div className='my-icon'>
+              <img className='my-icon-img'/>
+            </div>
+          </div>
+          <Route exact path='/' render={() =>(
+            <BookShelf/>
           )}/>
-        </header>
+          <Route
+            exact path='/search'
+            render={() => (
+              <Search
+              books= { this.state.books }/>
+            )}/>
+        </div>
       </div>
     );
   }
