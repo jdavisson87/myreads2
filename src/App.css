@@ -19,9 +19,10 @@
 }
 
 .head {
+  height: 30%;
   display: block;
   position: fixed;
-  top: 10px;
+  top: 0px;
   right:auto;
   left:auto;
 }
@@ -43,7 +44,6 @@
 }
 
 .my-icon-img {
-
   background: url('./icons/icon.svg');
   background-size: 100%;
   width: 170px;

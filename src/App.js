@@ -28,7 +28,7 @@ class App extends Component {
           <div className='head'>
             <h1>My Reads 2.0</h1>
             <div className='my-icon'>
-              <img className='my-icon-img'/>
+              <div className='my-icon-img'/>
             </div>
           </div>
           <Route exact path='/' render={() =>(
