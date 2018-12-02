@@ -4,6 +4,7 @@ import Book from './book'
 
 class Search extends Component {
   render(){
+    console.log(this.props.books)
     return(
       <div className='search'>
         <input type='text' className='query' placeholder='Type in book, author, or genre'></input>

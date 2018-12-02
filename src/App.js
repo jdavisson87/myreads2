@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import * as BooksAPI from './BooksAPI';
+import * as BooksAPI from './utils/BooksAPI';
 import BookShelf from './BookShelf';
 import Search from './Search';
 import logo from './logo.svg';
@@ -43,6 +43,7 @@ class App extends Component {
             )}/>
           </div>
         </div>
+        <div>Icons made by <a href="https://www.flaticon.com/authors/simpleicon" title="SimpleIcon">SimpleIcon</a> from <a href="https://www.flaticon.com/" 		    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 		    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
       </div>
     );
   }
