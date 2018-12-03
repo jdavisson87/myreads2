@@ -16,15 +16,15 @@ function Book(props) {
         )}
       </ol>
     )}else{
-    return(
-      <div>
-        <p>no results</p>
-      </div>
-    )
+      return(
+        <div>
+          <p>Currently, there are no results.  Please enter new search criteria.</p>
+        </div>
+      )
   }
 }else{
     return(
-      <div>nothing to return 2</div>
+      <div>Please search for a book</div>
     )
   }
 }

@@ -114,16 +114,23 @@
   border-radius: 50%;
 }
 
+.books {
+  list-style-type: none;
+  padding: 20px;
+  margin: 0;
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+}
+
 .book {
-  display: inline-block;
-  padding-left: 5px;
-  padding-right: 5px;
-  list-style: none;
+  width: 170px;
 }
 
 .book-cover {
   width: 128px;
   height: 193px;
+  margin-left: 25px;
 }
 
 .title {
