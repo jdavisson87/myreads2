@@ -9,6 +9,15 @@ function Book(props) {
         {props.books.map((books)=>
           <li className='book' key={books.id}>
             <div className="book-cover" style={{ backgroundImage: `url(${(books.imageLinks) ? (books.imageLinks.thumbnail) : "https://dummyimage.com/128X170/000/dadbe3.jpg&text=NO+IMAGE"})` }}>
+              <div className='shelf-changer'>
+                <select className='selector'>
+                  <option value='title' disabled>Move to...</option>
+                  <option value='current'>Currently Reading</option>
+                  <option value='want'>Want to Read</option>
+                  <option value='finish'>Finished Reading</option>
+                  <option value='none'>None</option>
+                </select>
+              </div>
             </div>
             <p className='title'>{books.title}</p>
             <p className='author'>{books.authors ? books.authors[0] : 'no Author'}</p>
