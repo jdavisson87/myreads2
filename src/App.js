@@ -11,15 +11,38 @@ class App extends Component {
     books: [],
     current: [],
     want: [],
-    read: []
+    read: [],
+    showingbooks: []
   }
 
-  componentDidMount() {
-    BooksAPI.getAll()
-    .then((books)=>{
-      this.setState({ books })
+componentDidMount() {
+  BooksAPI.getAll()
+  .then((books)=>{
+    if(!books.shelf){
+    books.map(book=>book.shelf='none');
+  }
+    this.setState({ books })
+  })
+}
+
+updateSearch = (query) => {
+  if (query) {
+    BooksAPI.search(query)
+      .then(results=>{
+        console.log(results)
+        if(results.length>0){
+          results.map(book=>{
+            if(!book.shelf){
+            console.log(book);
+            book.shelf='none'}
+          })
+          this.setState({ showingBooks : results })
+      }else if(results.length===0){
+        this.setStaet({ showingBooks: [] })
+      }
     })
   }
+}
 
   render() {
     return (
@@ -39,11 +62,12 @@ class App extends Component {
               exact path='/search'
               render={() => (
                 <Search
-                books= { this.state.books }/>
+                books= { this.state.books }
+                updateSearch = {this.updateSearch}
+              />
             )}/>
           </div>
         </div>
-        <div>Icons made by <a href="https://www.flaticon.com/authors/simpleicon" title="SimpleIcon">SimpleIcon</a> from <a href="https://www.flaticon.com/" 		    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 		    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
       </div>
     );
   }

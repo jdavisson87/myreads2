@@ -35,11 +35,11 @@
 }
 
 .body {
-  height: 70%;
+  min-height: 70%;
+  top: 30%;
   width: 100%;
   display: block;
   position: fixed;
-  bottom: 0px;
   right: auto;
   left: auto;
 }
@@ -54,10 +54,12 @@
 }
 
 .my-icon {
+  display: block;
   position: fixed;
   top: 20px;
   right: 25px;
-  display: block;
+  width: 15%;
+  height: 15%
 }
 
 .my-icon-img {
@@ -65,6 +67,7 @@
   background-size: 100%;
   width: 190px;
   height: 190px;
+
   background-repeat: no-repeat;
 }
 
