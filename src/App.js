@@ -27,20 +27,22 @@ componentDidMount() {
 
 updateSearch = (query) => {
   if (query) {
-    BooksAPI.search(query)
-      .then(results=>{
-        console.log(results)
-        if(results.length>0){
-          results.map(book=>{
-            if(!book.shelf){
-            console.log(book);
-            book.shelf='none'}
-          })
-          this.setState({ showingBooks : results })
-      }else if(results.length===0){
-        this.setStaet({ showingBooks: [] })
-      }
-    })
+      BooksAPI.search(query)
+        .then(results=>{
+          if(results.length==0){
+            this.setState({ showingBooks: [] })
+          }else if(results.length>0){
+            results.map(book=>{
+              if(!book.shelf){
+              book.shelf='none'}
+            })
+            this.setState({ showingBooks : results })
+          }else{
+            this.setState({ showingBooks: []})
+          }
+      })
+  }else{
+    this.setState({ showingBooks: [] })
   }
 }
 
@@ -62,8 +64,8 @@ updateSearch = (query) => {
               exact path='/search'
               render={() => (
                 <Search
-                books= { this.state.books }
-                updateSearch = {this.updateSearch}
+                books={ this.state.showingBooks }
+                updateSearch={this.updateSearch}
               />
             )}/>
           </div>

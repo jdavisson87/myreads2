@@ -121,6 +121,11 @@
   list-style: none;
 }
 
+.book-cover {
+  width: 128px;
+  height: 193px;
+}
+
 .title {
   font-weight: bold;
   font-size: 16px;
