@@ -46,6 +46,10 @@ updateSearch = (query) => {
   }
 }
 
+searchreset = () =>{
+  this.setState({ showingBooks: [] })
+}
+
   render() {
     return (
       <div className="App">
@@ -66,7 +70,8 @@ updateSearch = (query) => {
               render={() => (
                 <Search
                 books={ this.state.showingBooks }
-                updateSearch={this.updateSearch}
+                updateSearch= { this.updateSearch }
+                searchReset= { this.searchreset }
               />
             )}/>
             <div className='credit'>

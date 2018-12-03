@@ -15,6 +15,7 @@ class Search extends Component {
         <div className='home-icon'>
           <Link
             to='/'
+            onClick={this.props.searchReset}
           />
         </div>
       </div>
