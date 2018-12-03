@@ -2,11 +2,6 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
 .main {
   background-color: #282c34;
   min-height: 100vh;
@@ -23,6 +18,7 @@
   width: 100%;
   display: block;
   position: fixed;
+  z-index: 999;
   top: 0px;
   right:auto;
   left:auto;
@@ -35,17 +31,15 @@
 }
 
 .body {
-  min-height: 70%;
+  display: block;
+  position: absolute;
+  overflow-y: scroll;
+  background-color: #282c34;
   top: 30%;
   width: 100%;
-  display: block;
-  position: fixed;
+  padding-top: 40px;
   right: auto;
   left: auto;
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 .query {
@@ -69,10 +63,7 @@
   background-repeat: no-repeat;
 }
 
-.search {
-  width: 100%;
-  padding-top: 40px;
-}
+
 
 .search input {
   width: 80%;
@@ -82,6 +73,7 @@
   position: fixed;
   left: 20px;
   top: 20px;
+  z-index: 1000;
 }
 
 .search-icon a {
@@ -99,6 +91,7 @@
   position: fixed;
   left: 20px;
   top: 20px;
+  z-index: 1000;
 }
 
 .home-icon a {
@@ -117,7 +110,7 @@
   padding: 20px;
   margin: 0;
   display: flex;
-  justify-content: left;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -142,13 +135,4 @@
 .author {
   font-size: 14px;
   padding-top: 35px;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
