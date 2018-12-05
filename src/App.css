@@ -3,7 +3,7 @@
 }
 
 .main {
-  background-color: #282c34;
+  background-color: rgb(163, 163, 163);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -34,9 +34,9 @@
   display: block;
   position: absolute;
   overflow-y: scroll;
-  background-color: #282c34;
+  background-color: rgb(163, 163, 163);
   top: 30%;
-  width: 100%;
+  width: 105%;
   padding-top: 40px;
   right: auto;
   left: auto;
@@ -63,8 +63,11 @@
   background-repeat: no-repeat;
 }
 
+.search {
+  width: 100%;
 
-
+  background-color: rgb(163, 163, 163);
+}
 .search input {
   width: 80%;
 }
@@ -130,12 +133,11 @@
   font-size: 16px;
   margin: 5px;
   width: 170px;
-  height: 10px;
 }
 
 .author {
   font-size: 14px;
-  padding-top: 35px;
+
 }
 
 .shelf-changer {
@@ -155,4 +157,10 @@
   height: 100%;
   opacity: 0;
   cursor: pointer;
+}
+
+.bookshelf {
+  width: 100%;
+  background-color: rgb(163, 163, 163);
+
 }

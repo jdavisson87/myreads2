@@ -12,7 +12,8 @@ class App extends Component {
     current: [],
     want: [],
     read: [],
-    showingbooks: []
+    showingbooks: [],
+    checkedOut: []
   }
 
 componentDidMount() {
@@ -46,6 +47,54 @@ updateSearch = (query) => {
   }
 }
 
+removeFromShelf = (book) => {
+  if (book.shelf === 'current'){
+    this.setState((state)=>({
+      current: this.state.current.filter((b)=>b.id !==book.id)
+    }))
+  }else if(book.shelf === 'want'){
+    this.setState((state)=>({
+      want: this.state.want.filter((b)=>b.id !==book.id)
+    }))
+  }else if (book.shelf === 'read'){
+    this.setState((state)=>({
+      read: this.state.read.filter((b)=>b.id !==book.id)
+    }))
+  }
+}
+
+updateShelf = (book, shelf) =>{
+  if(shelf !== 'none' && book.shelf !== shelf){
+    this.setState(state => ({ checkedOut: state.checkedOut.concat([book])}));
+    if(shelf==='current'){
+      this.removeFromShelf(book);
+      book.shelf=shelf;
+      this.setState( state=> ({
+        current: state.current.concat([book])
+      }))
+    }else if(shelf==='want'){
+      this.removeFromShelf(book);
+      book.shelf=shelf;
+      this.setState( state=> ({
+        want: state.want.concat([book])
+      }))
+    }else if(shelf==='read'){
+      this.removeFromShelf(book);
+      book.shelf=shelf;
+      this.setState( state=> ({
+        read: state.read.concat([book])
+      }))
+    }
+  }else if(shelf ==='none' && book.shelf !== shelf){
+    this.removeFromShelf(book);
+    book.shelf='none';
+    this.setState(state =>({ checkedOut: this.state.checkedOut.filter((b)=>b.id !==book.id)}))
+  }
+  console.log(book.shelf)
+  BooksAPI.update(book,shelf).then(console.log('changed',book,shelf))
+}
+
+
 searchreset = () =>{
   this.setState({ showingBooks: [] })
 }
@@ -63,7 +112,11 @@ searchreset = () =>{
           </div>
           <div className='body'>
             <Route exact path='/' render={() =>(
-              <BookShelf/>
+              <BookShelf
+              shelf ={ this.state.current }
+              want={ this.state.want }
+              read={ this.state.read }
+            />
             )}/>
             <Route
               exact path='/search'
@@ -72,6 +125,7 @@ searchreset = () =>{
                 books={ this.state.showingBooks }
                 updateSearch= { this.updateSearch }
                 searchReset= { this.searchreset }
+                updateShelf= { this.updateShelf }
               />
             )}/>
             <div className='credit'>
