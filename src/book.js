@@ -11,7 +11,7 @@ function Book(props) {
           <li className='book' key={book.id}>
             <div className="book-cover" style={{ backgroundImage: `url(${(book.imageLinks) ? (book.imageLinks.thumbnail) : "https://dummyimage.com/128X170/000/dadbe3.jpg&text=NO+IMAGE"})` }}>
               <div className='shelf-changer'>
-                <select className='selector' value={book.shelf} onChange={(event)=>BooksAPI.update(book, event.target.value).then(props.updateShelf(book, event.target.value))}>
+                <select className='selector' value={book.shelf} onChange={(event)=>props.updateShelf(book, event.target.value)}>
                   <option value='title' disabled>Move to...</option>
                   <option value='current'>Currently Reading</option>
                   <option value='want'>Want to Read</option>
@@ -22,6 +22,7 @@ function Book(props) {
             </div>
             <p className='title'>{book.title}</p>
             <p className='author'>{book.authors ? book.authors[0] : 'No Author Listed'}</p>
+            <p>{book.shelf}</p>
           </li>
         )}
       </ol>

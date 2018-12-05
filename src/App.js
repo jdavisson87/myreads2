@@ -12,17 +12,14 @@ class App extends Component {
     current: [],
     want: [],
     read: [],
-    showingbooks: [],
-    checkedOut: []
+    showingbooks: []
   }
 
 componentDidMount() {
   BooksAPI.getAll()
-  .then((books)=>{
-    if(!books.shelf){
-    books.map(book=>book.shelf='none');
-  }
-    this.setState({ books })
+    .then((books)=>{
+      this.setState({ books: books})
+
   })
 }
 
@@ -34,8 +31,10 @@ updateSearch = (query) => {
             this.setState({ showingBooks: [] })
           }else if(results.length>0){
             results.map(book=>{
-              if(!book.shelf){
-              book.shelf='none'}
+              if(typeof(book.shelf)=='undefined'){
+              BooksAPI.update(book, 'none')
+                .then(()=> book.shelf='none')
+            }
             })
             this.setState({ showingBooks : results })
           }else{
@@ -47,51 +46,55 @@ updateSearch = (query) => {
   }
 }
 
-removeFromShelf = (book) => {
-  if (book.shelf === 'current'){
-    this.setState((state)=>({
-      current: this.state.current.filter((b)=>b.id !==book.id)
+removeFromShelf = (book) =>{
+  if(book.shelf==='read'){
+    this.setState((state)=> ({
+      read: this.state.read.filter((b)=> b.id !== book.id)
     }))
-  }else if(book.shelf === 'want'){
+  }else if(book.shelf==='want'){
     this.setState((state)=>({
-      want: this.state.want.filter((b)=>b.id !==book.id)
+      want: this.state.want.filter((b)=>b.id !== book.id)
     }))
-  }else if (book.shelf === 'read'){
+  }else if(book.shelf==='current'){
     this.setState((state)=>({
-      read: this.state.read.filter((b)=>b.id !==book.id)
+      current: this.state.current.filter((b)=>b.id !== book.id)
     }))
   }
 }
 
 updateShelf = (book, shelf) =>{
-  if(shelf !== 'none' && book.shelf !== shelf){
-    this.setState(state => ({ checkedOut: state.checkedOut.concat([book])}));
-    if(shelf==='current'){
-      this.removeFromShelf(book);
-      book.shelf=shelf;
-      this.setState( state=> ({
-        current: state.current.concat([book])
-      }))
-    }else if(shelf==='want'){
-      this.removeFromShelf(book);
-      book.shelf=shelf;
-      this.setState( state=> ({
-        want: state.want.concat([book])
-      }))
-    }else if(shelf==='read'){
-      this.removeFromShelf(book);
-      book.shelf=shelf;
-      this.setState( state=> ({
-        read: state.read.concat([book])
-      }))
-    }
-  }else if(shelf ==='none' && book.shelf !== shelf){
-    this.removeFromShelf(book);
-    book.shelf='none';
-    this.setState(state =>({ checkedOut: this.state.checkedOut.filter((b)=>b.id !==book.id)}))
+  if(book.shelf === shelf){
+    return;
   }
-  console.log(book.shelf)
-  BooksAPI.update(book,shelf).then(console.log('changed',book,shelf))
+  if(book.shelf !== 'none'){
+    this.removeFromShelf(book);
+  }
+  if(book.shelf==='none'){
+    this.setState(state=>({
+      books: this.state.books.concat([book])
+    }))
+  }
+  if(shelf === 'read'){
+    this.setState(state=>({
+      read: this.state.read.concat([book])
+    }))
+  }else if(shelf ==='current'){
+    this.setState(state=>({
+      current: this.state.current.concat([book])
+    }))
+  }else if(shelf === 'want'){
+    this.setState(state=>({
+      want: this.state.want.concat([book])
+    }))
+  }else if(shelf==='none'){
+    this.setState(state=>({
+      books: this.state.books.filter((b)=>b.id !== book.id)
+    }))
+  }
+  BooksAPI.update(book, shelf)
+  .then(()=> {
+    book.shelf=shelf;
+  });
 }
 
 
@@ -100,6 +103,7 @@ searchreset = () =>{
 }
 
   render() {
+    console.log(this.state.books)
     return (
       <div className="App">
         <div className="main">
@@ -113,9 +117,11 @@ searchreset = () =>{
           <div className='body'>
             <Route exact path='/' render={() =>(
               <BookShelf
-              shelf ={ this.state.current }
+              current ={ this.state.books }
               want={ this.state.want }
               read={ this.state.read }
+              showing= { this.state.books }
+              updateShelf= {this.updateShelf }
             />
             )}/>
             <Route

@@ -11,10 +11,10 @@ class Search extends Component {
           <p>Search for books</p>
           <input type='text' className='query' onChange={event=>{this.props.updateSearch(event.target.value)}} placeholder='Type in book, author, or genre'></input>
         </div>
-        <Book
-          books={this.props.books}
-          updateShelf={this.props.updateShelf}
-        />
+           <Book
+            books={this.props.books}
+            updateShelf={this.props.updateShelf}
+          />
         <div className='home-icon'>
           <Link
             to='/'

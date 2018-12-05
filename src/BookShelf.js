@@ -12,15 +12,27 @@ class BookShelf extends Component {
           />
         </div>
         <h2>My Bookshelf</h2>
-        <Shelf
-          books={this.props.current}
-        />
-        <Shelf
-          books={this.props.want}
-        />
-        <Shelf
-          books={this.props.read}
-        />
+        <div>
+          <p> Current books</p>
+          <Shelf
+            books={this.props.current}
+            updateShelf={this.props.updateShelf}
+          />
+        </div>
+        <div>
+          <p>Books I want to Read</p>
+          <Shelf
+            updateShelf={this.props.updateShelf}
+            books={this.props.want}
+          />
+        </div>
+        <div>
+          <p>Books I have Read</p>
+          <Shelf
+            books={this.props.read}
+            updateShelf={this.props.updateShelf}
+          />
+        </div>
       </div>
     )
   }
