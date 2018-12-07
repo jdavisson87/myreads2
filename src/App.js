@@ -18,23 +18,29 @@ class App extends Component {
 componentDidMount() {
   BooksAPI.getAll()
     .then((books)=>{
-      this.setState({ books: books})
+      this.setState({ books: books});
+      let current = books.filter(book=>book.shelf==="current");
+      let want = books.filter(book=>book.shelf==="want");
+      let read = books.filter(book=>book.shelf==="read");
 
-  })
-}
+      this.setState({ current: current });
+      this.setState({ want: want });
+      this.setState({ read: read });
+      })
+  }
+
 
 updateSearch = (query) => {
   if (query) {
       BooksAPI.search(query)
         .then(results=>{
-          if(results.length==0){
+          if(results.length===0){
             this.setState({ showingBooks: [] })
           }else if(results.length>0){
             results.map(book=>{
-              if(typeof(book.shelf)=='undefined'){
-              BooksAPI.update(book, 'none')
-                .then(()=> book.shelf='none')
-            }
+              if(book.shelf===undefined){
+                book.shelf='none'
+              }
             })
             this.setState({ showingBooks : results })
           }else{
@@ -47,25 +53,26 @@ updateSearch = (query) => {
 }
 
 removeFromShelf = (book) =>{
-  if(book.shelf==='read'){
-    this.setState((state)=> ({
-      read: this.state.read.filter((b)=> b.id !== book.id)
-    }))
-  }else if(book.shelf==='want'){
-    this.setState((state)=>({
-      want: this.state.want.filter((b)=>b.id !== book.id)
-    }))
-  }else if(book.shelf==='current'){
-    this.setState((state)=>({
-      current: this.state.current.filter((b)=>b.id !== book.id)
-    }))
+  switch (book.shelf) {
+    case 'read':
+      this.setState((state)=> ({
+        read: this.state.read.filter((b)=> b.id !== book.id)
+      }))
+      break;
+    case 'want':
+      this.setState((state)=> ({
+        want: this.state.want.filter((b)=> b.id !== book.id)
+      }))
+      break;
+    case 'current':
+      this.setState((state)=> ({
+        current: this.state.current.filter((b)=> b.id !== book.id)
+      }))
+      break;
   }
 }
 
 updateShelf = (book, shelf) =>{
-  if(book.shelf === shelf){
-    return;
-  }
   if(book.shelf !== 'none'){
     this.removeFromShelf(book);
   }
@@ -91,10 +98,7 @@ updateShelf = (book, shelf) =>{
       books: this.state.books.filter((b)=>b.id !== book.id)
     }))
   }
-  BooksAPI.update(book, shelf)
-  .then(()=> {
     book.shelf=shelf;
-  });
 }
 
 

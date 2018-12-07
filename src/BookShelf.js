@@ -22,8 +22,8 @@ class BookShelf extends Component {
         <div>
           <p>Books I want to Read</p>
           <Shelf
-            updateShelf={this.props.updateShelf}
             books={this.props.want}
+            updateShelf={this.props.updateShelf}
           />
         </div>
         <div>
