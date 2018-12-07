@@ -33,6 +33,13 @@ class BookShelf extends Component {
             updateShelf={this.props.updateShelf}
           />
         </div>
+        <div>
+          <p>Books in my case</p>
+          <Shelf
+            books={this.props.showing}
+            updateShelf={this.props.updateShelf}
+          />
+        </div>
       </div>
     )
   }

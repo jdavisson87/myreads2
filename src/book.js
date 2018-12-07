@@ -13,8 +13,8 @@ function Book(props) {
               <div className='shelf-changer'>
                 <select className='selector' value={book.shelf} onChange={(event)=>BooksAPI.update(book, event.target.value).then(props.updateShelf(book, event.target.value))}>
                   <option value='title' disabled>Move to...</option>
-                  <option value='current'>Currently Reading</option>
-                  <option value='want'>Want to Read</option>
+                  <option value='currentlyReading'>Currently Reading</option>
+                  <option value='wantToRead'>Want to Read</option>
                   <option value='read'>Finished Reading</option>
                   <option value='none'>None</option>
                 </select>
@@ -22,7 +22,6 @@ function Book(props) {
             </div>
             <p className='title'>{book.title}</p>
             <p className='author'>{book.authors ? book.authors[0] : 'No Author Listed'}</p>
-            <p>{book.shelf}</p>
           </li>
         )}
       </ol>

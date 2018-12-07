@@ -9,8 +9,8 @@ import './App.css';
 class App extends Component {
   state = {
     books: [],
-    current: [],
-    want: [],
+    currentlyReading: [],
+    wantToRead: [],
     read: [],
     showingbooks: []
   }
@@ -19,34 +19,38 @@ componentDidMount() {
   BooksAPI.getAll()
     .then((books)=>{
       this.setState({ books: books});
-      let current = books.filter(book=>book.shelf==="current");
-      let want = books.filter(book=>book.shelf==="want");
-      let read = books.filter(book=>book.shelf==="read");
-
-      this.setState({ current: current });
-      this.setState({ want: want });
-      this.setState({ read: read });
+      this.filterBooks(books);
       })
   }
 
+filterBooks= (books) => {
+  let current = books.filter(book=>book.shelf==="currentlyReading");
+  let want = books.filter(book=>book.shelf==="wantToRead");
+  let read = books.filter(book=>book.shelf==="read");
+  this.setState({ currentlyReading: current });
+  this.setState({ wantToRead: want });
+  this.setState({ read: read });
+}
+
+correctShelf = book => {
+  const bookOnShelf = this.state.books.filter(b => b.id===book.id)[0]
+  book.shelf = bookOnShelf ? bookOnShelf.shelf : 'none'
+  return book
+}
 
 updateSearch = (query) => {
   if (query) {
       BooksAPI.search(query)
-        .then(results=>{
-          if(results.length===0){
-            this.setState({ showingBooks: [] })
-          }else if(results.length>0){
-            results.map(book=>{
-              if(book.shelf===undefined){
-                book.shelf='none'
-              }
-            })
+        .then((results)=>{
+          results.map(book=> book.shelf='none')
+          if(results.length>0){
+            results= results.map(book=>this.correctShelf(book))
             this.setState({ showingBooks : results })
           }else{
             this.setState({ showingBooks: [] })
           }
       })
+
   }else{
     this.setState({ showingBooks: [] })
   }
@@ -54,60 +58,61 @@ updateSearch = (query) => {
 
 removeFromShelf = (book) =>{
   switch (book.shelf) {
+    case 'wantToRead':
+      this.setState((state)=> ({
+        wantToRead: this.state.wantToRead.filter((b)=> b.id !== book.id)
+      }))
+      break;
     case 'read':
       this.setState((state)=> ({
         read: this.state.read.filter((b)=> b.id !== book.id)
       }))
       break;
-    case 'want':
+    default:
       this.setState((state)=> ({
-        want: this.state.want.filter((b)=> b.id !== book.id)
-      }))
-      break;
-    case 'current':
-      this.setState((state)=> ({
-        current: this.state.current.filter((b)=> b.id !== book.id)
+        currentlyReading: this.state.currentlyReading.filter((b)=> b.id !== book.id)
       }))
       break;
   }
 }
 
-updateShelf = (book, shelf) =>{
-  if(book.shelf !== 'none'){
-    this.removeFromShelf(book);
-  }
-  if(book.shelf==='none'){
-    this.setState(state=>({
-      books: this.state.books.concat([book])
-    }))
-  }
-  if(shelf === 'read'){
-    this.setState(state=>({
-      read: this.state.read.concat([book])
-    }))
-  }else if(shelf ==='current'){
-    this.setState(state=>({
-      current: this.state.current.concat([book])
-    }))
-  }else if(shelf === 'want'){
-    this.setState(state=>({
-      want: this.state.want.concat([book])
-    }))
-  }else if(shelf==='none'){
-    this.setState(state=>({
-      books: this.state.books.filter((b)=>b.id !== book.id)
-    }))
-  }
-    book.shelf=shelf;
+updateShelf = (book, newShelf) =>{
+      if(book.shelf !== 'none'){
+        this.removeFromShelf(book);
+      }
+      if(book.shelf==='none'){
+        this.setState(state=>({
+          books: this.state.books.concat([book])
+        }))
+      }
+      if(newShelf === 'wantToRead'){
+        book.shelf=newShelf;
+        this.setState(state=>({
+          wantToRead: this.state.wantToRead.concat([book])
+        }))
+      }else if(newShelf ==='currentlyReading'){
+        book.shelf=newShelf;
+        this.setState(state=>({
+          currentlyReading: this.state.currentlyReading.concat([book])
+        }))
+      }else if(newShelf === 'read'){
+        book.shelf=newShelf;
+        this.setState(state=>({
+          read: this.state.read.concat([book])
+        }))
+      }else if(newShelf==='none'){
+        book.shelf=newShelf;
+        this.setState(state=>({
+          books: this.state.books.filter((b)=>b.id !== book.id)
+        }))
+      }
 }
-
 
 searchreset = () =>{
   this.setState({ showingBooks: [] })
 }
 
   render() {
-    console.log(this.state.books)
     return (
       <div className="App">
         <div className="main">
@@ -121,8 +126,8 @@ searchreset = () =>{
           <div className='body'>
             <Route exact path='/' render={() =>(
               <BookShelf
-              current ={ this.state.books }
-              want={ this.state.want }
+              current ={ this.state.currentlyReading }
+              want={ this.state.wantToRead }
               read={ this.state.read }
               showing= { this.state.books }
               updateShelf= {this.updateShelf }
