@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import * as BooksAPI from './utils/BooksAPI';
 
 function Book(props) {
@@ -8,8 +7,10 @@ function Book(props) {
     return (
       <ol className='books'>
         {props.books.map((book)=>
-          <li className='book' key={book.id}>
-            <div className="book-cover" style={{ backgroundImage: `url(${(book.imageLinks) ? (book.imageLinks.thumbnail) : "https://dummyimage.com/128X170/000/dadbe3.jpg&text=NO+IMAGE"})` }}>
+          <li key={book.id}>
+            <div className='book'>
+              <div className="book-cover" style={{ backgroundImage: `url(${(book.imageLinks) ? (book.imageLinks.thumbnail) : "https://dummyimage.com/128X170/000/dadbe3.jpg&text=NO+IMAGE"})` }}>
+              </div>
               <div className='shelf-changer'>
                 <select className='selector' value={book.shelf} onChange={(event)=>BooksAPI.update(book, event.target.value).then(props.updateShelf(book, event.target.value))}>
                   <option value='title' disabled>Move to...</option>
@@ -19,9 +20,9 @@ function Book(props) {
                   <option value='none'>None</option>
                 </select>
               </div>
+              <p className='title'>{book.title}</p>
+              <p className='author'>{book.authors ? book.authors[0] : 'No Author Listed'}</p>
             </div>
-            <p className='title'>{book.title}</p>
-            <p className='author'>{book.authors ? book.authors[0] : 'No Author Listed'}</p>
           </li>
         )}
       </ol>

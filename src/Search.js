@@ -16,10 +16,10 @@ class Search extends Component {
             updateShelf={this.props.updateShelf}
           />
         <div className='home-icon'>
-          <Link
-            to='/'
-            onClick={this.props.searchReset}
-          />
+            <Link
+              to='/'
+              onClick={this.props.searchReset}
+            />
         </div>
       </div>
     )

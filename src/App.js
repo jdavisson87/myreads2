@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route} from 'react-router-dom';
 import * as BooksAPI from './utils/BooksAPI';
 import BookShelf from './BookShelf';
 import Search from './Search';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -12,13 +11,15 @@ class App extends Component {
     currentlyReading: [],
     wantToRead: [],
     read: [],
-    showingbooks: []
+    showingbooks: [],
+    isLoading: true
   }
 
 componentDidMount() {
   BooksAPI.getAll()
     .then((books)=>{
-      this.setState({ books: books});
+      this.setState({ books: books,
+      isLoading: false});
       this.filterBooks(books);
       })
   }
@@ -113,45 +114,64 @@ searchreset = () =>{
 }
 
   render() {
-    return (
-      <div className="App">
-        <div className="main">
-          <div className='head'>
-            <h1>My Reads 2.0</h1>
-            <div className='my-icon'>
-              <div className='my-icon-img'>
+    if(this.state.isLoading===true){
+      return(
+        <div className='App'>
+          <div className='loading'>
+            <p>Loading...</p>
+          </div>
+        </div>
+      )
+    }else{
+      return (
+        <div className="App">
+          <div className="main">
+            <div className='head'>
+              <h1>My Reads 2.0</h1>
+              <div className='my-icon'>
+                <div className='my-icon-img'>
+                </div>
+              </div>
+            </div>
+            <div className='body'>
+              <Route exact path='/' render={() =>(
+                <BookShelf
+                current ={ this.state.currentlyReading }
+                want={ this.state.wantToRead }
+                read={ this.state.read }
+                showing= { this.state.books }
+                updateShelf= {this.updateShelf }
+              />
+              )}/>
+              <Route
+                exact path='/search'
+                render={() => (
+                  <Search
+                  books={ this.state.showingBooks }
+                  updateSearch= { this.updateSearch }
+                  searchReset= { this.searchreset }
+                  updateShelf= { this.updateShelf }
+                />
+              )}/>
+              <div className='credit'>
+                <p>
+                  Icons made by
+                  <a href="https://www.flaticon.com/authors/simpleicon" title="SimpleIcon">
+                    SimpleIcon
+                  </a> from
+                  <a href="https://www.flaticon.com/" title="Flaticon">
+                    www.flaticon.com
+                  </a> is licensed by
+                  <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">
+                    CC 3.0 BY
+                  </a>
+                </p>
               </div>
             </div>
           </div>
-          <div className='body'>
-            <Route exact path='/' render={() =>(
-              <BookShelf
-              current ={ this.state.currentlyReading }
-              want={ this.state.wantToRead }
-              read={ this.state.read }
-              showing= { this.state.books }
-              updateShelf= {this.updateShelf }
-            />
-            )}/>
-            <Route
-              exact path='/search'
-              render={() => (
-                <Search
-                books={ this.state.showingBooks }
-                updateSearch= { this.updateSearch }
-                searchReset= { this.searchreset }
-                updateShelf= { this.updateShelf }
-              />
-            )}/>
-            <div className='credit'>
-              <p>
-                Icons made by <a href="https://www.flaticon.com/authors/simpleicon" title="SimpleIcon">SimpleIcon</a> from <a href="https://www.flaticon.com/" 		    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 		    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
-              </p>
-            </div>
-          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
