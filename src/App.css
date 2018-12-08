@@ -28,14 +28,12 @@
 }
 
 .head {
-  height: 30%;
+  height: 25%;
   width: 100%;
   display: block;
   position: fixed;
   z-index: 999;
   top: 0px;
-  right:auto;
-  left:auto;
   background-image: linear-gradient(to right, #282c34, #2d79c6);
 }
 
@@ -45,12 +43,15 @@
 }
 
 .body {
+  padding: 0;
+  margin: 0;
   width: 100%;
   display: block;
   position: absolute;
-  overflow-y: scroll;
+  left: 0px;
+  right: 0px;
   background-color: rgb(163, 163, 163);
-  top: 30%;
+  top: 25%;
 }
 
 .query {
@@ -62,7 +63,7 @@
   display: block;
   position: fixed;
   top: 20px;
-  right: 25px;
+  right: 20px;
 }
 
 .my-icon-img {
@@ -70,7 +71,6 @@
   background-size: 100%;
   width: 150px;
   height: 150px;
-
   background-repeat: no-repeat;
 }
 
@@ -78,6 +78,7 @@
   width: 100%;
   background-color: rgb(163, 163, 163);
 }
+
 .search input {
   width: 80%;
 }
@@ -98,7 +99,6 @@
   background-image: url('./icons/magnifier.svg');
   background-repeat: no-repeat;
   background-position: center;
-  box-shadow: 4px 3px 5px rgb(215,215,215), 0 3px 5px rgb(255,255,255);
 
 }
 
@@ -118,7 +118,6 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  box-shadow: 4px 3px 5px rgb(215, 215, 215), 0 3px 5px rgb(255,255,255);
 
 }
 
@@ -175,7 +174,7 @@
 
 .bookshelf {
   width: 100%;
-  padding: 0 10px 20px;
+  padding: 0 0 20px;
   background-color: rgb(163, 163, 163);
 
 }

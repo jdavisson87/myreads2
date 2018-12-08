@@ -43,7 +43,9 @@ updateSearch = (query) => {
   if (query) {
       BooksAPI.search(query)
         .then((results)=>{
-          results.map(book=> book.shelf='none')
+          if(results.length===0){
+            this.setState({ showingBooks: []})
+          }
           if(results.length>0){
             results= results.map(book=>this.correctShelf(book))
             this.setState({ showingBooks : results })
