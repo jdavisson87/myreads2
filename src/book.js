@@ -21,7 +21,7 @@ function Book(props) {
                 </select>
               </div>
               <p className='title'>{book.title}</p>
-              <p className='author'>{book.authors ? book.authors[0] : 'No Author Listed'}</p>
+              <p className='author'>{book.authors ? book.authors.map(author=>{return (<p>{author}</p>)}) : 'No Author Listed'}</p>
             </div>
           </li>
         )}
