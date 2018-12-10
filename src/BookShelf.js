@@ -11,23 +11,23 @@ class BookShelf extends Component {
             to='/search'
           />
         </div>
-        <h2>My Bookshelf</h2>
+        <h2 className='bookshelf-title'>My Bookshelf</h2>
         <div>
-          <p> Current books</p>
+          <h3 className='shelf-title'> Current books</h3>
           <Shelf
             books={this.props.current}
             updateShelf={this.props.updateShelf}
           />
         </div>
         <div>
-          <p>Books I want to Read</p>
+          <h3 className='shelf-title'>Books I want to Read</h3>
           <Shelf
             books={this.props.want}
             updateShelf={this.props.updateShelf}
           />
         </div>
         <div>
-          <p>Books I have Read</p>
+          <h3 className='shelf-title'>Books I have Read</h3>
           <Shelf
             books={this.props.read}
             updateShelf={this.props.updateShelf}

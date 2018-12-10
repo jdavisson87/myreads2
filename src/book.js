@@ -20,8 +20,8 @@ function Book(props) {
                   <option value='none'>None</option>
                 </select>
               </div>
-              <p className='title'>{book.title}</p>
-              <p className='author'>{book.authors ? book.authors.map(author=>{return (<p>{author}</p>)}) : 'No Author Listed'}</p>
+              <span className='title'>{book.title}</span>
+              <span className='author'>{book.authors ? book.authors.map(author=>{return (<p className='ind-auth'>{author}</p>)}) : 'No Author Listed'}</span>
             </div>
           </li>
         )}
