@@ -7,7 +7,7 @@ const Books = ({ books, updateShelf }) => {
       return (
         <ol className="books">
           {books.map((b) => (
-            <Book book={b} updateShelf={updateShelf} />
+            <Book key={b.id} book={b} updateShelf={updateShelf} />
           ))}
         </ol>
       );

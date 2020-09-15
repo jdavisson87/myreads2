@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import * as BooksAPI from './utils/BooksAPI';
 import BookShelves from './container/BookShelves/BookShelves.container';
@@ -6,163 +6,150 @@ import Search from './components/Search/Search.component';
 import Footer from './components/Footer/Footer.component';
 import './App.css';
 
-class App extends Component {
-  state = {
-    books: [],
-    currentlyReading: [],
-    wantToRead: [],
-    read: [],
-    showingbooks: [],
-    isLoading: true,
-  };
+const App = () => {
+  const [books, setBooks] = useState([]);
+  const [current, setCurrent] = useState([]);
+  const [want, setWant] = useState([]);
+  const [read, setRead] = useState([]);
+  const [showingBooks, setShowingBooks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  componentDidMount() {
+  useEffect(() => {
     BooksAPI.getAll().then((books) => {
-      this.setState({ books: books, isLoading: false });
-      this.filterBooks(books);
+      setBooks(books);
+      setIsLoading(false);
+      filterBooks(books);
     });
-  }
+  }, []);
 
-  filterBooks = (books) => {
-    let current = books.filter((book) => book.shelf === 'currentlyReading');
-    let want = books.filter((book) => book.shelf === 'wantToRead');
-    let read = books.filter((book) => book.shelf === 'read');
-    this.setState({ currentlyReading: current });
-    this.setState({ wantToRead: want });
-    this.setState({ read: read });
+  const filterBooks = (books) => {
+    const current = books.filter((book) => book.shelf === 'currentlyReading');
+    const want = books.filter((book) => book.shelf === 'wantToRead');
+    const read = books.filter((book) => book.shelf === 'read');
+    setCurrent(current);
+    setWant(want);
+    setRead(read);
   };
 
-  correctShelf = (book) => {
-    const bookOnShelf = this.state.books.filter((b) => b.id === book.id)[0];
+  const correctShelf = (book) => {
+    const bookOnShelf = books.filter((b) => b.id === book.id)[0];
     book.shelf = bookOnShelf ? bookOnShelf.shelf : 'none';
     return book;
   };
 
-  updateSearch = (query) => {
+  const updateSearch = (query) => {
     if (query) {
       BooksAPI.search(query).then((results) => {
         if (results.length > 0) {
-          results = results.map((book) => this.correctShelf(book));
-          this.setState({ showingBooks: results });
+          results = results.map((book) => correctShelf(book));
+          setShowingBooks(results);
         } else {
-          this.setState({ showingBooks: [] });
+          setShowingBooks([]);
         }
       });
     } else {
-      this.setState({ showingBooks: [] });
+      setShowingBooks([]);
     }
   };
 
-  removeFromShelf = (book) => {
+  const removeFromShelf = (book) => {
     switch (book.shelf) {
       case 'wantToRead':
-        this.setState((state) => ({
-          wantToRead: this.state.wantToRead.filter((b) => b.id !== book.id),
-        }));
+        let updatedWant = want.filter((b) => b.id !== book.id);
+        setWant(updatedWant);
         break;
       case 'read':
-        this.setState((state) => ({
-          read: this.state.read.filter((b) => b.id !== book.id),
-        }));
+        let updatedRead = read.filter((b) => b.id !== book.id);
+        setRead(updatedRead);
         break;
       default:
-        this.setState((state) => ({
-          currentlyReading: this.state.currentlyReading.filter(
-            (b) => b.id !== book.id
-          ),
-        }));
+        let updatedCurrent = current.filter((b) => b.id !== book.id);
+        setCurrent(updatedCurrent);
         break;
     }
   };
 
-  updateShelf = (book, newShelf) => {
+  const updateShelf = (book, newShelf) => {
     if (book.shelf !== 'none') {
-      this.removeFromShelf(book);
+      removeFromShelf(book);
     }
     if (book.shelf === 'none') {
-      this.setState((state) => ({
-        books: this.state.books.concat([book]),
-      }));
+      let updateBooks = books.concat([book]);
+      setBooks(updateBooks);
     }
-    if (newShelf === 'wantToRead') {
-      book.shelf = newShelf;
-      this.setState((state) => ({
-        wantToRead: this.state.wantToRead.concat([book]),
-      }));
-    } else if (newShelf === 'currentlyReading') {
-      book.shelf = newShelf;
-      this.setState((state) => ({
-        currentlyReading: this.state.currentlyReading.concat([book]),
-      }));
-    } else if (newShelf === 'read') {
-      book.shelf = newShelf;
-      this.setState((state) => ({
-        read: this.state.read.concat([book]),
-      }));
-    } else if (newShelf === 'none') {
-      book.shelf = newShelf;
-      this.setState((state) => ({
-        books: this.state.books.filter((b) => b.id !== book.id),
-      }));
+    switch (newShelf) {
+      case 'wantToRead':
+        book.shelf = newShelf;
+        let updateWant = want.concat([book]);
+        setWant(updateWant);
+        break;
+      case 'currentlyReading':
+        book.shelf = newShelf;
+        let updateCurrent = current.concat([book]);
+        setCurrent(updateCurrent);
+        break;
+      case 'read':
+        book.shelf = newShelf;
+        let updateRead = read.concat([book]);
+        setRead(updateRead);
+        break;
+      default:
+        book.shelf = newShelf;
+        let updateBooks = books.filter((b) => b.id !== book.id);
+        setBooks(updateBooks);
     }
   };
 
-  searchreset = () => {
-    this.setState({ showingBooks: [] });
+  const searchReset = () => {
+    setShowingBooks([]);
   };
 
-  render() {
-    if (this.state.isLoading === true) {
-      return (
-        <div className="App">
-          <div className="loading">
-            <p>Loading...</p>
+  return isLoading === true ? (
+    <div className="App">
+      <div className="loading">
+        <p>Loading...</p>
+      </div>
+    </div>
+  ) : (
+    <div className="App">
+      <div className="main">
+        <div className="head">
+          <h1>My Reads 2.0</h1>
+          <div className="my-icon">
+            <div className="my-icon-img" />
           </div>
         </div>
-      );
-    } else {
-      return (
-        <div className="App">
-          <div className="main">
-            <div className="head">
-              <h1>My Reads 2.0</h1>
-              <div className="my-icon">
-                <div className="my-icon-img" />
-              </div>
-            </div>
-            <div className="body">
-              <Route
-                exact
-                path="/"
-                render={() => (
-                  <BookShelves
-                    current={this.state.currentlyReading}
-                    want={this.state.wantToRead}
-                    read={this.state.read}
-                    showing={this.state.books}
-                    updateShelf={this.updateShelf}
-                  />
-                )}
+        <div className="body">
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <BookShelves
+                current={current}
+                want={want}
+                read={read}
+                showing={books}
+                updateShelf={updateShelf}
               />
-              <Route
-                exact
-                path="/search"
-                render={() => (
-                  <Search
-                    books={this.state.showingBooks}
-                    updateSearch={this.updateSearch}
-                    searchReset={this.searchreset}
-                    updateShelf={this.updateShelf}
-                  />
-                )}
+            )}
+          />
+          <Route
+            exact
+            path="/search"
+            render={() => (
+              <Search
+                books={showingBooks}
+                updateSearch={updateSearch}
+                searchReset={searchReset}
+                updateShelf={updateShelf}
               />
-              <Footer />
-            </div>
-          </div>
+            )}
+          />
+          <Footer />
         </div>
-      );
-    }
-  }
-}
+      </div>
+    </div>
+  );
+};
 
 export default App;
