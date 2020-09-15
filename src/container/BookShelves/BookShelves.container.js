@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Book from '../book';
+import Book from '../Books/Books.container';
 
-const BookShelf = (props) => (
+const BookShelves = ({ current, want, read, updateShelf }) => (
   <div className="bookshelf">
     <div className="search-icon">
       <Link to="/search" />
@@ -10,24 +10,24 @@ const BookShelf = (props) => (
     <h2 className="bookshelf-title">My Bookshelf</h2>
     <div>
       <h3 className="shelf-title"> Current books</h3>
-      {props.current.length > 0 ? (
-        <Book books={props.current} updateShelf={props.updateShelf} />
+      {current.length > 0 ? (
+        <Book books={current} updateShelf={updateShelf} />
       ) : (
         <div>There are currently no books on this shelf</div>
       )}
     </div>
     <div>
       <h3 className="shelf-title">Books I want to Read</h3>
-      {props.want.length > 0 ? (
-        <Book books={props.want} updateShelf={props.updateShelf} />
+      {want.length > 0 ? (
+        <Book books={want} updateShelf={updateShelf} />
       ) : (
         <div>There are currently no books on this shelf</div>
       )}
     </div>
     <div>
       <h3 className="shelf-title">Books I have Read</h3>
-      {props.read.length > 0 ? (
-        <Book books={props.read} updateShelf={props.updateShelf} />
+      {read.length > 0 ? (
+        <Book books={read} updateShelf={updateShelf} />
       ) : (
         <div>There are currently no books on this shelf</div>
       )}
@@ -35,4 +35,4 @@ const BookShelf = (props) => (
   </div>
 );
 
-export default BookShelf;
+export default BookShelves;

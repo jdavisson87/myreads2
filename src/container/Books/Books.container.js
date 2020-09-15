@@ -1,5 +1,5 @@
 import React from 'react';
-import Selector from './components/Selector/Selector.component';
+import Selector from '../../components/Selector/Selector.component';
 
 const Book = ({ books, updateShelf }) => {
   if (books) {

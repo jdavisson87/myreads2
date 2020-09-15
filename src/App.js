@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import * as BooksAPI from './utils/BooksAPI';
-import BookShelf from './container/BookShelf.container';
-import Search from './Search';
+import BookShelves from './container/BookShelves/BookShelves.container';
+import Search from './components/Search/Search.component';
 import './App.css';
 
 class App extends Component {
@@ -134,7 +134,7 @@ class App extends Component {
                 exact
                 path="/"
                 render={() => (
-                  <BookShelf
+                  <BookShelves
                     current={this.state.currentlyReading}
                     want={this.state.wantToRead}
                     read={this.state.read}
