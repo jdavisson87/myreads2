@@ -1,12 +1,12 @@
 import React from 'react';
 import Selector from '../Selector/Selector.component';
+import { BookItem, BookCover } from './Book.styles';
 
 const Book = ({ book, updateShelf }) => {
   const { title, authors, imageLinks } = book;
   return (
-    <li className="book">
-      <div
-        className="book-cover"
+    <BookItem>
+      <BookCover
         style={{
           backgroundImage: `url(${
             imageLinks
@@ -30,7 +30,7 @@ const Book = ({ book, updateShelf }) => {
             })
           : 'No Author Listed'}
       </span>
-    </li>
+    </BookItem>
   );
 };
 
