@@ -1,15 +1,16 @@
 import React from 'react';
 import Book from '../../components/Book/Book.component';
+import { BooksCtr } from './Books.styles';
 
 const Books = ({ books, updateShelf }) => {
   if (books) {
     if (books.length > 0) {
       return (
-        <ol className="books">
+        <BooksCtr>
           {books.map((b) => (
             <Book key={b.id} book={b} updateShelf={updateShelf} />
           ))}
-        </ol>
+        </BooksCtr>
       );
     } else {
       return (

@@ -1,6 +1,13 @@
 import React from 'react';
 import Selector from '../Selector/Selector.component';
-import { BookItem, BookCover, ShelfChanger } from './Book.styles';
+import {
+  BookItem,
+  BookCover,
+  ShelfChanger,
+  BookTitle,
+  BookAuthor,
+  BookIndvAuthor,
+} from './Book.styles';
 
 const Book = ({ book, updateShelf }) => {
   const { title, authors, imageLinks } = book;
@@ -18,18 +25,14 @@ const Book = ({ book, updateShelf }) => {
       <ShelfChanger>
         <Selector book={book} updateShelf={updateShelf} />
       </ShelfChanger>
-      <span className="title">{title}</span>
-      <span className="author">
+      <BookTitle>{title}</BookTitle>
+      <BookAuthor>
         {authors
           ? authors.map((author) => {
-              return (
-                <p key={author} className="ind-auth">
-                  {author}
-                </p>
-              );
+              return <BookIndvAuthor key={author}>{author}</BookIndvAuthor>;
             })
           : 'No Author Listed'}
-      </span>
+      </BookAuthor>
     </BookItem>
   );
 };
