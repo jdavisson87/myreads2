@@ -1,6 +1,6 @@
 import React from 'react';
 import Selector from '../Selector/Selector.component';
-import { BookItem, BookCover } from './Book.styles';
+import { BookItem, BookCover, ShelfChanger } from './Book.styles';
 
 const Book = ({ book, updateShelf }) => {
   const { title, authors, imageLinks } = book;
@@ -15,9 +15,9 @@ const Book = ({ book, updateShelf }) => {
           })`,
         }}
       />
-      <div className="shelf-changer">
+      <ShelfChanger>
         <Selector book={book} updateShelf={updateShelf} />
-      </div>
+      </ShelfChanger>
       <span className="title">{title}</span>
       <span className="author">
         {authors

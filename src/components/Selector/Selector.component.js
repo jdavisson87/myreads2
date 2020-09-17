@@ -1,9 +1,9 @@
 import React from 'react';
 import { update } from '../../utils/BooksAPI';
+import { SelectorCtr } from './Selector.styles';
 
 const Selector = ({ book, updateShelf }) => (
-  <select
-    className="selector"
+  <SelectorCtr
     value={book.shelf}
     onChange={(event) =>
       update(book, event.target.value).then(
@@ -18,7 +18,7 @@ const Selector = ({ book, updateShelf }) => (
     <option value="wantToRead">Want to Read</option>
     <option value="read">Finished Reading</option>
     <option value="none">None</option>
-  </select>
+  </SelectorCtr>
 );
 
 export default Selector;
