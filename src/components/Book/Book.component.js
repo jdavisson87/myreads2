@@ -11,17 +11,12 @@ import {
 
 const Book = ({ book, updateShelf }) => {
   const { title, authors, imageLinks } = book;
+  const imgStyle = imageLinks
+    ? imageLinks.thumbnail
+    : 'https://dummyimage.com/128X170/000/dadbe3.jpg&text=NO+IMAGE';
   return (
     <BookItem>
-      <BookCover
-        style={{
-          backgroundImage: `url(${
-            imageLinks
-              ? imageLinks.thumbnail
-              : 'https://dummyimage.com/128X170/000/dadbe3.jpg&text=NO+IMAGE'
-          })`,
-        }}
-      />
+      <BookCover imgUrl={imgStyle} />
       <ShelfChanger>
         <Selector book={book} updateShelf={updateShelf} />
       </ShelfChanger>

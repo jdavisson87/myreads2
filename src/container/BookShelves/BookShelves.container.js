@@ -1,15 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Books from '../Books/Books.container';
+import {
+  BookShelfCtr,
+  SearchIconCtr,
+  BookShelfTitle,
+  ShelfTitle,
+} from './BookShelves.styles';
 
 const BookShelves = ({ current, want, read, updateShelf }) => (
-  <div className="bookshelf">
-    <div className="search-icon">
+  <BookShelfCtr>
+    <SearchIconCtr>
       <Link to="/search" />
-    </div>
-    <h2 className="bookshelf-title">My Bookshelf</h2>
+    </SearchIconCtr>
+    <BookShelfTitle>My Bookshelf</BookShelfTitle>
     <div>
-      <h3 className="shelf-title"> Current books</h3>
+      <ShelfTitle> Current books</ShelfTitle>
       {current.length > 0 ? (
         <Books books={current} updateShelf={updateShelf} />
       ) : (
@@ -17,7 +23,7 @@ const BookShelves = ({ current, want, read, updateShelf }) => (
       )}
     </div>
     <div>
-      <h3 className="shelf-title">Books I want to Read</h3>
+      <ShelfTitle>Books I want to Read</ShelfTitle>
       {want.length > 0 ? (
         <Books books={want} updateShelf={updateShelf} />
       ) : (
@@ -25,14 +31,14 @@ const BookShelves = ({ current, want, read, updateShelf }) => (
       )}
     </div>
     <div>
-      <h3 className="shelf-title">Books I have Read</h3>
+      <ShelfTitle>Books I have Read</ShelfTitle>
       {read.length > 0 ? (
         <Books books={read} updateShelf={updateShelf} />
       ) : (
         <div>There are currently no books on this shelf</div>
       )}
     </div>
-  </div>
+  </BookShelfCtr>
 );
 
 export default BookShelves;
