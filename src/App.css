@@ -6,7 +6,7 @@
 .loading {
   width: 100%;
   height: 100%;
-  background:rgb(163, 163, 163);
+  background: rgb(163, 163, 163);
   display: block;
   position: fixed;
   left: auto;
@@ -100,7 +100,6 @@
   background-image: url('./icons/magnifier.svg');
   background-repeat: no-repeat;
   background-position: center;
-
 }
 
 .home-icon {
@@ -119,10 +118,9 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-
 }
 
-.books {
+/* .books {
   list-style-type: none;
   padding: 20px;
   margin: 0;
@@ -133,15 +131,15 @@
 
 .book {
   width: 170px;
-}
+} */
 
-.book-cover {
+/* .book-cover {
   width: 128px;
   height: 193px;
   margin-left: 25px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-
+} */
+/* 
 .title {
   font-family: palatino, cursive;
   font-weight: bold;
@@ -149,22 +147,22 @@
   font-size: 19px;
   margin: 5px;
   width: 170px;
-}
+} */
 
-.author {
+/* .author {
   font-family: palatino, cursive;
   font-size: 16px;
   font-weight: bold;
   font-style: italic;
   color: #2d79c6;
-}
+} */
 
-.ind-auth {
+/* .ind-auth {
   padding: 0;
   margin: 0;
-}
+} */
 
-.shelf-changer {
+/* .shelf-changer {
   width: 40px;
   height: 40px;
   right: 0;
@@ -175,14 +173,14 @@
   background-position: center;
   background-size: 20px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
+} */
 
-.shelf-changer select {
+/* .shelf-changer select {
   width: 100%;
   height: 100%;
   opacity: 0;
   cursor: pointer;
-}
+} */
 
 .bookshelf {
   width: 100%;
@@ -196,10 +194,10 @@
 
 .shelf-title {
   font-family: palatino, cursive;
-  color:#282c34;
+  color: #282c34;
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 800px) {
   .head {
     height: 100px;
     width: 100%;
@@ -236,7 +234,7 @@
   }
 }
 
-@media screen and (max-width: 450px){
+@media screen and (max-width: 450px) {
   .head {
     height: 100px;
     width: 100%;
@@ -275,7 +273,7 @@
   .title {
     font-family: palatino, cursive;
     font-weight: bold;
-    color:#282c34;
+    color: #282c34;
     font-size: 16px;
     margin: 5px;
     width: 170px;
@@ -293,7 +291,7 @@
     font-size: 26px;
   }
 
-  .credit{
+  /* .credit{
     font-size: 12px;
-  }
+  } */
 }

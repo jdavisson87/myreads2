@@ -1,8 +1,8 @@
 import React from 'react';
-import '../../App.css';
+import { CreditContainer } from './Footer.styles';
 
 const Footer = () => (
-  <div className="credit">
+  <CreditContainer>
     <p>
       Icons made by
       <a href="https://www.flaticon.com/authors/simpleicon" title="SimpleIcon">
@@ -20,7 +20,7 @@ const Footer = () => (
         CC 3.0 BY
       </a>
     </p>
-  </div>
+  </CreditContainer>
 );
 
 export default Footer;
