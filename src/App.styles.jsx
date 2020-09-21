@@ -27,11 +27,25 @@ export const AppHeader = styled.div`
   z-index: 999;
   top: 0px;
   background-image: linear-gradient(to right, #282c34, #2d79c6);
+
+  @media screen and (max-width: 800px) {
+    height: 100px;
+    width: 100%;
+    display: block;
+    position: fixed;
+    z-index: 999;
+    top: 0px;
+    background-image: linear-gradient(to right, #282c34, #2d79c6);
+  }
 `;
 
 export const AppTitle = styled.h1`
   font-family: palatino, cursive;
   font-size: 75px;
+  @media screen and (max-width: 800px) {
+    font-family: palatino, cursive;
+    font-size: 40px;
+  }
 `;
 
 export const MainCtr = styled.div`
@@ -55,4 +69,7 @@ export const BodyCtr = styled.div`
   right: 0px;
   background-color: rgb(163, 163, 163);
   top: 25%;
+  @media screen and (max-width: 800px) {
+    top: 100px;
+  }
 `;

@@ -14,4 +14,8 @@ export const MyIconImg = styled.div`
   width: 135px;
   height: 135px;
   background-repeat: no-repeat;
+  @media screen and (max-width: 800px) {
+    width: 75px;
+    height: 75px;
+  }
 `;
