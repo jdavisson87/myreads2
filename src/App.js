@@ -4,7 +4,17 @@ import * as BooksAPI from './utils/BooksAPI';
 import BookShelves from './container/BookShelves/BookShelves.container';
 import Search from './components/Search/Search.component';
 import Footer from './components/Footer/Footer.component';
+import PersonalIcon from './components/PersonalIcon/PersonalIcon.component';
 import './App.css';
+import {
+  AppHeader,
+  AppTitle,
+  AppCtr,
+  LoadingCtr,
+  LoadingText,
+  MainCtr,
+  BodyCtr,
+} from './App.styles';
 
 const App = () => {
   const [books, setBooks] = useState([]);
@@ -105,21 +115,19 @@ const App = () => {
   };
 
   return isLoading === true ? (
-    <div className="App">
-      <div className="loading">
-        <p>Loading...</p>
-      </div>
-    </div>
+    <AppCtr>
+      <LoadingCtr>
+        <LoadingText>Loading...</LoadingText>
+      </LoadingCtr>
+    </AppCtr>
   ) : (
-    <div className="App">
-      <div className="main">
-        <div className="head">
-          <h1>My Reads 2.0</h1>
-          <div className="my-icon">
-            <div className="my-icon-img" />
-          </div>
-        </div>
-        <div className="body">
+    <AppCtr>
+      <MainCtr>
+        <AppHeader>
+          <AppTitle>My Reads 2.0</AppTitle>
+          <PersonalIcon />
+        </AppHeader>
+        <BodyCtr>
           <Route
             exact
             path="/"
@@ -146,9 +154,9 @@ const App = () => {
             )}
           />
           <Footer />
-        </div>
-      </div>
-    </div>
+        </BodyCtr>
+      </MainCtr>
+    </AppCtr>
   );
 };
 
