@@ -24,11 +24,8 @@ export const SearchIconCtr = styled.div`
   }
 `;
 
-export const BookShelfTitle = styled.h2`
-  font-family: palatino, cursive;
-`;
+export const BookShelfTitle = styled.h2``;
 
 export const ShelfTitle = styled.h3`
-  font-family: palatino, cursive;
   color: #282c34;
 `;

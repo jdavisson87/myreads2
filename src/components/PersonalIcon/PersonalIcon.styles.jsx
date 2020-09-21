@@ -18,4 +18,9 @@ export const MyIconImg = styled.div`
     width: 75px;
     height: 75px;
   }
+
+  @media screen and (max-width: 450px) {
+    width: 50px;
+    height: 50px;
+  }
 `;

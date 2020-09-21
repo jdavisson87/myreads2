@@ -35,6 +35,9 @@ export const BookTitle = styled.span`
   font-size: 19px;
   margin: 5px;
   width: 170px;
+  @media screen and (max-width: 450px) {
+    font-size: 16px;
+  }
 `;
 
 export const BookAuthor = styled.span`
@@ -43,6 +46,9 @@ export const BookAuthor = styled.span`
   font-weight: bold;
   font-style: italic;
   color: #2d79c6;
+  @media screen and (max-width: 450px) {
+    font-size: 12px;
+  }
 `;
 
 export const BookIndvAuthor = styled.p`

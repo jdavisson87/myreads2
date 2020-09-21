@@ -5,7 +5,6 @@ import BookShelves from './container/BookShelves/BookShelves.container';
 import Search from './components/Search/Search.component';
 import Footer from './components/Footer/Footer.component';
 import PersonalIcon from './components/PersonalIcon/PersonalIcon.component';
-import './App.css';
 import {
   AppHeader,
   AppTitle,

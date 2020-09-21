@@ -30,12 +30,6 @@ export const AppHeader = styled.div`
 
   @media screen and (max-width: 800px) {
     height: 100px;
-    width: 100%;
-    display: block;
-    position: fixed;
-    z-index: 999;
-    top: 0px;
-    background-image: linear-gradient(to right, #282c34, #2d79c6);
   }
 `;
 
@@ -43,8 +37,10 @@ export const AppTitle = styled.h1`
   font-family: palatino, cursive;
   font-size: 75px;
   @media screen and (max-width: 800px) {
-    font-family: palatino, cursive;
     font-size: 40px;
+  }
+  @media screen and (max-width: 450px) {
+    font-size: 24px;
   }
 `;
 
