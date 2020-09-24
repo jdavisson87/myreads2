@@ -6,6 +6,16 @@ export const setCurrentBooks = (currentBook) => ({
   payload: currentBook,
 });
 
+export const setWantBooks = (wantBook) => ({
+  type: actionTypes.SET_WANT_BOOKS,
+  payload: wantBook,
+});
+
+export const setReadBooks = (readBook) => ({
+  type: actionTypes.SET_READ_BOOKS,
+  payload: readBook,
+});
+
 export const setBooks = (books) => ({
   type: actionTypes.SET_BOOKS,
   payload: books,
@@ -31,9 +41,27 @@ export const fetchBooks = () => {
     BooksAPI.getAll()
       .then((books) => {
         dispatch(fetchBooksSuccess(books));
+        dispatch(filterBooks(books));
       })
       .catch((err) => {
         dispatch(fetchBooksFailure(err));
       });
   };
 };
+
+const filterBooks = (books) => {
+  return (dispatch) => {
+    const current = books.filter((book) => book.shelf === 'currentlyReading');
+    const want = books.filter((book) => book.shelf === 'wantToRead');
+    const read = books.filter((book) => book.shelf === 'read');
+    dispatch(setFilterBooks(books, want, current, read));
+  };
+};
+
+const setFilterBooks = (books, want, current, read) => ({
+  type: actionTypes.SET_FILTERED_BOOKS,
+  books: books,
+  want: want,
+  current: current,
+  read: read,
+});

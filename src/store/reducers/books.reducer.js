@@ -21,11 +21,24 @@ const booksReducer = (state = INITIAL_STATE, action) => {
       return updateObject(state, { error: action.error, isLoading: false });
     case actionTypes.SET_CURRENT_BOOKS:
       const updatedCurrentBooks = updateObject(state.current, action.payload);
-      const updateState = {
-        current: updatedCurrentBooks,
+      const updateCurrentState = { current: updatedCurrentBooks };
+      return updateObject(state, updateCurrentState);
+    case actionTypes.SET_WANT_BOOKS:
+      const updateWantBooks = updateObject(state.want, action.payload);
+      const updateWantState = { want: updateWantBooks };
+      return updateObject(state, updateWantState);
+    case actionTypes.SET_READ_BOOKS:
+      const updateReadBooks = updateObject(state.read, action.payload);
+      const updateReadState = { read: updateReadBooks };
+      return updateObject(state, updateReadState);
+    case actionTypes.SET_FILTERED_BOOKS:
+      const filteredState = {
+        books: action.books,
+        current: action.current,
+        want: action.want,
+        read: action.read,
       };
-      return updateObject(state, updateState);
-
+      return updateObject(state, filteredState);
     default:
       return state;
   }
