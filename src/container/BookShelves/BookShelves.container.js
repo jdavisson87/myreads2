@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Books from '../Books/Books.container';
 import {
   BookShelfCtr,
@@ -8,7 +9,7 @@ import {
   ShelfTitle,
 } from './BookShelves.styles';
 
-const BookShelves = ({ current, want, read, updateShelf }) => (
+const BookShelves = ({ currentBooks, want, read, updateShelf }) => (
   <BookShelfCtr>
     <SearchIconCtr>
       <Link to="/search" />
@@ -16,8 +17,8 @@ const BookShelves = ({ current, want, read, updateShelf }) => (
     <BookShelfTitle>My Bookshelf</BookShelfTitle>
     <div>
       <ShelfTitle> Current books</ShelfTitle>
-      {current.length > 0 ? (
-        <Books books={current} updateShelf={updateShelf} />
+      {currentBooks.length > 0 ? (
+        <Books books={currentBooks} updateShelf={updateShelf} />
       ) : (
         <div>There are currently no books on this shelf</div>
       )}
@@ -41,4 +42,8 @@ const BookShelves = ({ current, want, read, updateShelf }) => (
   </BookShelfCtr>
 );
 
-export default BookShelves;
+const mapStateToProps = (state) => ({
+  currentBooks: state.books.current,
+});
+
+export default connect(mapStateToProps)(BookShelves);

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from './store/actions/books.actions';
 import * as BooksAPI from './utils/BooksAPI';
 import BookShelves from './container/BookShelves/BookShelves.container';
 import Search from './components/Search/Search.component';
@@ -15,103 +17,110 @@ import {
   BodyCtr,
 } from './App.styles';
 
-const App = () => {
-  const [books, setBooks] = useState([]);
-  const [current, setCurrent] = useState([]);
-  const [want, setWant] = useState([]);
-  const [read, setRead] = useState([]);
-  const [showingBooks, setShowingBooks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+const App = (props) => {
+  // const [books, setBooks] = useState([]);
+  // const [current, setCurrent] = useState([]);
+  // const [want, setWant] = useState([]);
+  // const [read, setRead] = useState([]);
+  // const [showingBooks, setShowingBooks] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    BooksAPI.getAll().then((books) => {
-      setBooks(books);
-      setIsLoading(false);
-      filterBooks(books);
-    });
-  }, []);
+  const { onFetchBooks, books } = props;
 
-  const filterBooks = (books) => {
-    const current = books.filter((book) => book.shelf === 'currentlyReading');
-    const want = books.filter((book) => book.shelf === 'wantToRead');
-    const read = books.filter((book) => book.shelf === 'read');
-    setCurrent(current);
-    setWant(want);
-    setRead(read);
-  };
+  useEffect(
+    () => {
+      // BooksAPI.getAll().then((books) => {
+      //   setBooks(books);
+      //   setIsLoading(false);
+      //   filterBooks(books);
+      // });
 
-  const correctShelf = (book) => {
-    const bookOnShelf = books.filter((b) => b.id === book.id)[0];
-    book.shelf = bookOnShelf ? bookOnShelf.shelf : 'none';
-    return book;
-  };
+      onFetchBooks();
+    },
+    [onFetchBooks]
+  );
 
-  const updateSearch = (query) => {
-    if (query) {
-      BooksAPI.search(query).then((results) => {
-        if (results.length > 0) {
-          results = results.map((book) => correctShelf(book));
-          setShowingBooks(results);
-        } else {
-          setShowingBooks([]);
-        }
-      });
-    } else {
-      setShowingBooks([]);
-    }
-  };
+  // const filterBooks = (books) => {
+  //   const current = books.filter((book) => book.shelf === 'currentlyReading');
+  //   const want = books.filter((book) => book.shelf === 'wantToRead');
+  //   const read = books.filter((book) => book.shelf === 'read');
+  //   setCurrent(current);
+  //   setWant(want);
+  //   setRead(read);
+  // };
 
-  const removeFromShelf = (book) => {
-    switch (book.shelf) {
-      case 'wantToRead':
-        let updatedWant = want.filter((b) => b.id !== book.id);
-        setWant(updatedWant);
-        break;
-      case 'read':
-        let updatedRead = read.filter((b) => b.id !== book.id);
-        setRead(updatedRead);
-        break;
-      default:
-        let updatedCurrent = current.filter((b) => b.id !== book.id);
-        setCurrent(updatedCurrent);
-        break;
-    }
-  };
+  // const correctShelf = (book) => {
+  //   const bookOnShelf = books.filter((b) => b.id === book.id)[0];
+  //   book.shelf = bookOnShelf ? bookOnShelf.shelf : 'none';
+  //   return book;
+  // };
 
-  const updateShelf = (book, newShelf) => {
-    if (book.shelf !== 'none') {
-      removeFromShelf(book);
-    }
-    if (book.shelf === 'none') {
-      let updateBooks = books.concat([book]);
-      setBooks(updateBooks);
-    }
-    switch (newShelf) {
-      case 'wantToRead':
-        book.shelf = newShelf;
-        let updateWant = want.concat([book]);
-        setWant(updateWant);
-        break;
-      case 'currentlyReading':
-        book.shelf = newShelf;
-        let updateCurrent = current.concat([book]);
-        setCurrent(updateCurrent);
-        break;
-      case 'read':
-        book.shelf = newShelf;
-        let updateRead = read.concat([book]);
-        setRead(updateRead);
-        break;
-      default:
-        book.shelf = newShelf;
-        let updateBooks = books.filter((b) => b.id !== book.id);
-        setBooks(updateBooks);
-    }
-  };
+  // const updateSearch = (query) => {
+  //   if (query) {
+  //     BooksAPI.search(query).then((results) => {
+  //       if (results.length > 0) {
+  //         results = results.map((book) => correctShelf(book));
+  //         setShowingBooks(results);
+  //       } else {
+  //         setShowingBooks([]);
+  //       }
+  //     });
+  //   } else {
+  //     setShowingBooks([]);
+  //   }
+  // };
 
-  const searchReset = () => {
-    setShowingBooks([]);
-  };
+  // const removeFromShelf = (book) => {
+  //   switch (book.shelf) {
+  //     case 'wantToRead':
+  //       let updatedWant = want.filter((b) => b.id !== book.id);
+  //       setWant(updatedWant);
+  //       break;
+  //     case 'read':
+  //       let updatedRead = read.filter((b) => b.id !== book.id);
+  //       setRead(updatedRead);
+  //       break;
+  //     default:
+  //       let updatedCurrent = current.filter((b) => b.id !== book.id);
+  //       setCurrent(updatedCurrent);
+  //       break;
+  //   }
+  // };
+
+  // const updateShelf = (book, newShelf) => {
+  //   if (book.shelf !== 'none') {
+  //     removeFromShelf(book);
+  //   }
+  //   if (book.shelf === 'none') {
+  //     let updateBooks = books.concat([book]);
+  //     //setBooks(updateBooks);
+  //   }
+  //   switch (newShelf) {
+  //     case 'wantToRead':
+  //       book.shelf = newShelf;
+  //       let updateWant = want.concat([book]);
+  //       setWant(updateWant);
+  //       break;
+  //     case 'currentlyReading':
+  //       book.shelf = newShelf;
+  //       let updateCurrent = current.concat([book]);
+  //       setCurrent(updateCurrent);
+  //       break;
+  //     case 'read':
+  //       book.shelf = newShelf;
+  //       let updateRead = read.concat([book]);
+  //       setRead(updateRead);
+  //       break;
+  //     default:
+  //       book.shelf = newShelf;
+  //       let updateBooks = books.filter((b) => b.id !== book.id);
+  //     //setBooks(updateBooks);
+  //   }
+  // };
+
+  // const searchReset = () => {
+  //   setShowingBooks([]);
+  // };
 
   return isLoading === true ? (
     <AppCtr>
@@ -130,27 +139,27 @@ const App = () => {
           <Route
             exact
             path="/"
-            render={() => (
-              <BookShelves
-                current={current}
-                want={want}
-                read={read}
-                showing={books}
-                updateShelf={updateShelf}
-              />
-            )}
+            // render={() => (
+            //   <BookShelves
+            //     current={current}
+            //     want={want}
+            //     read={read}
+            //     showing={books}
+            //     updateShelf={updateShelf}
+            //   />
+            // )}
           />
           <Route
             exact
             path="/search"
-            render={() => (
-              <Search
-                books={showingBooks}
-                updateSearch={updateSearch}
-                searchReset={searchReset}
-                updateShelf={updateShelf}
-              />
-            )}
+            // render={() => (
+            //   <Search
+            //     books={showingBooks}
+            //     updateSearch={updateSearch}
+            //     searchReset={searchReset}
+            //     updateShelf={updateShelf}
+            //   />
+            // )}
           />
           <Footer />
         </BodyCtr>
@@ -159,4 +168,19 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    books: state.books.books,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchBooks: () => dispatch(actions.fetchBooks()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
