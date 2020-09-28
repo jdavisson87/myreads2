@@ -1,4 +1,3 @@
-export const SET_BOOKS = 'SET_BOOKS';
 export const SET_BOOK_ON_SHELF = 'SET_BOOK_ON_SHELF';
 
 export const FETCH_BOOKS_START = 'FETCH_BOOKS_START';

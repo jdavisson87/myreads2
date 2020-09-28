@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { update } from '../../utils/BooksAPI';
 import { SelectorCtr } from './Selector.styles';
 import * as actions from '../../store/actions/books.actions';
 
@@ -12,8 +11,8 @@ const Selector = ({ book, updateShelf }) => (
     <option value="title" disabled>
       Move to...
     </option>
-    <option value="current">Currently Reading</option>
-    <option value="want">Want to Read</option>
+    <option value="currentlyReading">Currently Reading</option>
+    <option value="wantToRead">Want to Read</option>
     <option value="read">Finished Reading</option>
     <option value="none">None</option>
   </SelectorCtr>

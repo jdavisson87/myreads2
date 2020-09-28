@@ -7,11 +7,6 @@ export const setBookOnShelf = (book, shelf) => ({
   book: book,
 });
 
-export const setBooks = (books) => ({
-  type: actionTypes.SET_BOOKS,
-  payload: books,
-});
-
 export const fetchBooksStart = () => ({
   type: actionTypes.FETCH_BOOKS_START,
 });
@@ -44,8 +39,8 @@ export const fetchBooks = () => {
 };
 
 const filterBooks = (books) => {
-  const current = books.filter((book) => book.shelf === 'current');
-  const want = books.filter((book) => book.shelf === 'want');
+  const current = books.filter((book) => book.shelf === 'currentlyReading');
+  const want = books.filter((book) => book.shelf === 'wantToRead');
   const read = books.filter((book) => book.shelf === 'read');
   return {
     books: books,
@@ -59,14 +54,24 @@ export const updateShelves = (book, newShelf) => {
   return (dispatch) => {
     if (book.shelf === 'none') {
       book.shelf = newShelf;
-      dispatch(setBookOnShelf(book, newShelf));
+      BooksAPI.update(book, newShelf).then(() => {
+        const stateShelf = shelfSelector(newShelf);
+        dispatch(setBookOnShelf(book, stateShelf));
+      });
     } else if (newShelf === 'none') {
+      const oldShelf = shelfSelector(book.shelf);
       book.shelf = 'none';
-      dispatch(removeBookFromAll(book));
+      BooksAPI.update(book, newShelf).then(() => {
+        dispatch(removeBookFromAll(book, oldShelf));
+      });
     } else {
       const oldShelf = book.shelf;
       book.shelf = newShelf;
-      dispatch(setUpdateShelves(book, newShelf, oldShelf));
+      BooksAPI.update(book, newShelf).then(() => {
+        const stateNewShelf = shelfSelector(newShelf);
+        const stateOldShelf = shelfSelector(oldShelf);
+        dispatch(setUpdateShelves(book, stateNewShelf, stateOldShelf));
+      });
     }
   };
 };
@@ -78,8 +83,21 @@ const setUpdateShelves = (book, newShelf, oldShelf) => ({
   newShelf: newShelf,
 });
 
-const removeBookFromAll = (book) => ({
+const removeBookFromAll = (book, shelf) => ({
   type: actionTypes.REMOVE_BOOK_FROM_ALL,
   book: book,
-  shelf: book.shelf,
+  shelf: shelf,
 });
+
+const shelfSelector = (shelf) => {
+  switch (shelf) {
+    case 'currentlyReading':
+      return 'current';
+    case 'wantToRead':
+      return 'want';
+    case 'read':
+      return 'read';
+    default:
+      return 'none';
+  }
+};

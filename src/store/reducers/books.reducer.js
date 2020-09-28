@@ -37,7 +37,6 @@ const booksReducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
       });
     case actionTypes.UPDATE_SHELVES:
-      console.log('HERE', action.oldShelf, state);
       const shelfWithBookRemoved = state[action.oldShelf].filter(
         (b) => action.book.id !== b.id
       );
