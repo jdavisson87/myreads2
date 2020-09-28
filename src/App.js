@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/books.actions';
-import * as BooksAPI from './utils/BooksAPI';
 import BookShelves from './container/BookShelves/BookShelves.container';
 import Search from './components/Search/Search.component';
 import Footer from './components/Footer/Footer.component';
@@ -22,10 +21,9 @@ const App = (props) => {
   // const [current, setCurrent] = useState([]);
   // const [want, setWant] = useState([]);
   // const [read, setRead] = useState([]);
-  // const [showingBooks, setShowingBooks] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  //const [showingBooks, setShowingBooks] = useState([]);
 
-  const { onFetchBooks, books } = props;
+  const { onFetchBooks, isLoading } = props;
 
   useEffect(
     () => {
@@ -53,21 +51,6 @@ const App = (props) => {
   //   const bookOnShelf = books.filter((b) => b.id === book.id)[0];
   //   book.shelf = bookOnShelf ? bookOnShelf.shelf : 'none';
   //   return book;
-  // };
-
-  // const updateSearch = (query) => {
-  //   if (query) {
-  //     BooksAPI.search(query).then((results) => {
-  //       if (results.length > 0) {
-  //         results = results.map((book) => correctShelf(book));
-  //         setShowingBooks(results);
-  //       } else {
-  //         setShowingBooks([]);
-  //       }
-  //     });
-  //   } else {
-  //     setShowingBooks([]);
-  //   }
   // };
 
   // const removeFromShelf = (book) => {
@@ -118,11 +101,26 @@ const App = (props) => {
   //   }
   // };
 
+  // const updateSearch = (query) => {
+  //   if (query) {
+  //     BooksAPI.search(query).then((results) => {
+  //       if (results.length > 0) {
+  //         results = results.map((book) => correctShelf(book));
+  //         setShowingBooks(results);
+  //       } else {
+  //         setShowingBooks([]);
+  //       }
+  //     });
+  //   } else {
+  //     setShowingBooks([]);
+  //   }
+  // };
+
   // const searchReset = () => {
   //   setShowingBooks([]);
   // };
 
-  return isLoading === true ? (
+  return isLoading ? (
     <AppCtr>
       <LoadingCtr>
         <LoadingText>Loading...</LoadingText>
@@ -139,28 +137,22 @@ const App = (props) => {
           <Route
             exact
             path="/"
-            // render={() => (
-            //   <BookShelves
-            //     current={current}
-            //     want={want}
-            //     read={read}
-            //     showing={books}
-            //     updateShelf={updateShelf}
-            //   />
-            // )}
+            render={
+              () => <BookShelves updateShelf={() => {}} />
+              // updateShelf
+            }
           />
-          <Route
-            exact
-            path="/search"
-            // render={() => (
-            //   <Search
-            //     books={showingBooks}
-            //     updateSearch={updateSearch}
-            //     searchReset={searchReset}
-            //     updateShelf={updateShelf}
-            //   />
-            // )}
-          />
+          <Route exact path="/search" />
+
+          {/*
+                <Search
+                  books={showingBooks}
+                  updateSearch={updateSearch}
+                  searchReset={searchReset}
+                  updateShelf={updateShelf}
+                />
+              */}
+
           <Footer />
         </BodyCtr>
       </MainCtr>
@@ -168,9 +160,9 @@ const App = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ books }) => {
   return {
-    books: state.books.books,
+    isLoading: books.isLoading,
   };
 };
 
