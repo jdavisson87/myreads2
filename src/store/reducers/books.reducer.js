@@ -36,6 +36,23 @@ const booksReducer = (state = INITIAL_STATE, action) => {
         [action.shelf]: updateShelf,
         isLoading: false,
       });
+    case actionTypes.UPDATE_SHELVES:
+      console.log('HERE', action.oldShelf, state);
+      const shelfWithBookRemoved = state[action.oldShelf].filter(
+        (b) => action.book.id !== b.id
+      );
+      const shelfWithBookAdded = state[action.newShelf].concat(action.book);
+      return updateObject(state, {
+        [action.oldShelf]: shelfWithBookRemoved,
+        [action.newShelf]: shelfWithBookAdded,
+      });
+    case actionTypes.REMOVE_BOOK_FROM_ALL:
+      const newShelf = state[action.shelf].filter(
+        (b) => action.book.id !== b.id
+      );
+      return updateObject(state, {
+        [action.shelf]: newShelf,
+      });
     default:
       return state;
   }

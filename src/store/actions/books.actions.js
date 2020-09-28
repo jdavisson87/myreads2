@@ -44,8 +44,8 @@ export const fetchBooks = () => {
 };
 
 const filterBooks = (books) => {
-  const current = books.filter((book) => book.shelf === 'currentlyReading');
-  const want = books.filter((book) => book.shelf === 'wantToRead');
+  const current = books.filter((book) => book.shelf === 'current');
+  const want = books.filter((book) => book.shelf === 'want');
   const read = books.filter((book) => book.shelf === 'read');
   return {
     books: books,
@@ -59,13 +59,27 @@ export const updateShelves = (book, newShelf) => {
   return (dispatch) => {
     if (book.shelf === 'none') {
       book.shelf = newShelf;
+      dispatch(setBookOnShelf(book, newShelf));
+    } else if (newShelf === 'none') {
+      book.shelf = 'none';
+      dispatch(removeBookFromAll(book));
+    } else {
+      const oldShelf = book.shelf;
+      book.shelf = newShelf;
+      dispatch(setUpdateShelves(book, newShelf, oldShelf));
     }
-    dispatch(setUpdateShelves(newShelf, book));
   };
 };
 
 const setUpdateShelves = (book, newShelf, oldShelf) => ({
   type: actionTypes.UPDATE_SHELVES,
-  [newShelf]: book,
-  [oldShelf]: book,
+  book: book,
+  oldShelf: oldShelf,
+  newShelf: newShelf,
+});
+
+const removeBookFromAll = (book) => ({
+  type: actionTypes.REMOVE_BOOK_FROM_ALL,
+  book: book,
+  shelf: book.shelf,
 });
