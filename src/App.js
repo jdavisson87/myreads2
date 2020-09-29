@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/books.actions';
 import BookShelves from './container/BookShelves/BookShelves.container';
@@ -134,25 +134,11 @@ const App = (props) => {
           <PersonalIcon />
         </AppHeader>
         <BodyCtr>
-          <Route
-            exact
-            path="/"
-            render={
-              () => <BookShelves updateShelf={() => {}} />
-              // updateShelf
-            }
-          />
-          <Route exact path="/search" />
-
-          {/*
-                <Search
-                  books={showingBooks}
-                  updateSearch={updateSearch}
-                  searchReset={searchReset}
-                  updateShelf={updateShelf}
-                />
-              */}
-
+          <Switch>
+            <Route path="/search" component={Search} />
+            <Route exact path="/" component={BookShelves} />
+            <Redirect to="/" />
+          </Switch>
           <Footer />
         </BodyCtr>
       </MainCtr>
@@ -172,7 +158,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

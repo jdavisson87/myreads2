@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/books.actions';
 import Selector from '../Selector/Selector.component';
 import {
   BookItem,
@@ -9,7 +11,8 @@ import {
   BookIndvAuthor,
 } from './Book.styles';
 
-const Book = ({ book, updateShelf }) => {
+const Book = (props) => {
+  const { book } = props; //still needs book passed down
   const { title, authors, imageLinks } = book;
   const imgStyle = imageLinks
     ? imageLinks.thumbnail
@@ -18,7 +21,7 @@ const Book = ({ book, updateShelf }) => {
     <BookItem>
       <BookCover imgUrl={imgStyle} />
       <ShelfChanger>
-        <Selector book={book} updateShelf={updateShelf} />
+        <Selector book={book} updateShelf={() => {}} />
       </ShelfChanger>
       <BookTitle>{title}</BookTitle>
       <BookAuthor>
@@ -32,4 +35,13 @@ const Book = ({ book, updateShelf }) => {
   );
 };
 
-export default Book;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    //updateShelf: dispatch(actions.updateShelves()),
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Book);

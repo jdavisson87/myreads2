@@ -2,7 +2,7 @@ import { updateObject } from '../../utils/utility';
 import * as actionTypes from '../actions/actionTypes';
 
 const INITIAL_STATE = {
-  books: [],
+  // books: [],
   current: [],
   want: [],
   read: [],
@@ -19,9 +19,9 @@ const booksReducer = (state = INITIAL_STATE, action) => {
       const fetchedWant = state.want.concat(action.want);
       const fetchedCurrent = state.current.concat(action.current);
       const fetchedRead = state.read.concat(action.read);
-      const fetchedBooks = state.books.concat(action.books);
+      // const fetchedBooks = state.books.concat(action.books);
       const filteredState = {
-        books: fetchedBooks,
+        // books: fetchedBooks,
         current: fetchedCurrent,
         want: fetchedWant,
         read: fetchedRead,
@@ -52,6 +52,8 @@ const booksReducer = (state = INITIAL_STATE, action) => {
       return updateObject(state, {
         [action.shelf]: newShelf,
       });
+    case actionTypes.SEARCH_RESET:
+      return updateObject(state, { showingBooks: [] });
     default:
       return state;
   }

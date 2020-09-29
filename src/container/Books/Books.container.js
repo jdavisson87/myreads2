@@ -2,13 +2,13 @@ import React from 'react';
 import Book from '../../components/Book/Book.component';
 import { BooksCtr } from './Books.styles';
 
-const Books = ({ books, updateShelf }) => {
+const Books = ({ books }) => {
   if (books) {
     if (books.length > 0) {
       return (
         <BooksCtr>
           {books.map((b) => (
-            <Book key={b.id} book={b} updateShelf={updateShelf} />
+            <Book key={b.id} book={b} />
           ))}
         </BooksCtr>
       );

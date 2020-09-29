@@ -13,7 +13,7 @@ export const fetchBooksStart = () => ({
 
 export const fetchBooksSuccess = (books) => ({
   type: actionTypes.FETCH_BOOKS_SUCCESS,
-  books: books.books,
+  // books: books.books,
   want: books.want,
   current: books.current,
   read: books.read,
@@ -43,7 +43,7 @@ const filterBooks = (books) => {
   const want = books.filter((book) => book.shelf === 'wantToRead');
   const read = books.filter((book) => book.shelf === 'read');
   return {
-    books: books,
+    // books: books,
     want: want,
     current: current,
     read: read,
@@ -52,7 +52,9 @@ const filterBooks = (books) => {
 
 export const updateShelves = (book, newShelf) => {
   return (dispatch) => {
-    if (book.shelf === 'none') {
+    if (book.shelf === undefined) {
+      book.shelf = 'none';
+    } else if (book.shelf === 'none') {
       book.shelf = newShelf;
       BooksAPI.update(book, newShelf).then(() => {
         const stateShelf = shelfSelector(newShelf);
@@ -101,3 +103,7 @@ const shelfSelector = (shelf) => {
       return 'none';
   }
 };
+
+export const searchReset = () => ({
+  type: actionTypes.SEARCH_RESET,
+});

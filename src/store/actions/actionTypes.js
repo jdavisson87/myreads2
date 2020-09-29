@@ -6,3 +6,5 @@ export const FETCH_BOOKS_FAIL = ' FETCH_BOOKS_FAIL';
 
 export const UPDATE_SHELVES = 'UPDATE_SHELVES';
 export const REMOVE_BOOK_FROM_ALL = 'REMOVE_BOOK_FROM_ALL';
+
+export const SEARCH_RESET = 'SEARCH_RESET';

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import img from '../../icons/magnifier.svg';
+import { NavLink } from 'react-router-dom';
 
 export const BookShelfCtr = styled.div`
   width: 100%;
@@ -12,16 +13,17 @@ export const SearchIconCtr = styled.div`
   left: 20px;
   top: 20px;
   z-index: 1000;
-  & > a {
-    display: block;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #2d79c6;
-    background-image: url(${img});
-    background-repeat: no-repeat;
-    background-position: center;
-  }
+`;
+
+export const SearchIconLink = styled(NavLink)`
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #2d79c6;
+  background-image: url(${img});
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 export const BookShelfTitle = styled.h2``;

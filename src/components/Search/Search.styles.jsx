@@ -11,16 +11,15 @@ export const HomeIconCtr = styled.div`
   left: 20px;
   top: 20px;
   z-index: 1000;
-
   & > a {
     display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
     background: #2d79c6;
     background-image: url(${img});
     background-repeat: no-repeat;
     background-position: center;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
   }
 `;
 
