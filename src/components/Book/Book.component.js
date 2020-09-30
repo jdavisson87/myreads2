@@ -1,6 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../store/actions/books.actions';
 import Selector from '../Selector/Selector.component';
 import {
   BookItem,
@@ -21,7 +19,7 @@ const Book = (props) => {
     <BookItem>
       <BookCover imgUrl={imgStyle} />
       <ShelfChanger>
-        <Selector book={book} updateShelf={() => {}} />
+        <Selector book={book} />
       </ShelfChanger>
       <BookTitle>{title}</BookTitle>
       <BookAuthor>
@@ -35,13 +33,4 @@ const Book = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    //updateShelf: dispatch(actions.updateShelves()),
-  };
-};
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(Book);
+export default Book;

@@ -54,7 +54,8 @@ export const updateShelves = (book, newShelf) => {
   return (dispatch) => {
     if (book.shelf === undefined) {
       book.shelf = 'none';
-    } else if (book.shelf === 'none') {
+    }
+    if (book.shelf === 'none') {
       book.shelf = newShelf;
       BooksAPI.update(book, newShelf).then(() => {
         const stateShelf = shelfSelector(newShelf);
@@ -107,3 +108,44 @@ const shelfSelector = (shelf) => {
 export const searchReset = () => ({
   type: actionTypes.SEARCH_RESET,
 });
+
+export const fetchSearchStart = () => ({
+  type: actionTypes.FETCH_SEARCH_START,
+});
+
+export const fetchSearchSuccess = (results) => ({
+  type: actionTypes.FETCH_SEARCH_SUCCESS,
+  showingBooks: results,
+});
+
+export const fetchSearchFail = (err) => ({
+  type: actionTypes.FETCH_SEARCH_FAIL,
+  error: err,
+});
+
+const correctShelf = (book) => {
+  if (!book.shelf) {
+    book.shelf = 'none';
+  }
+  return book;
+};
+
+export const fetchSearchResults = (query) => {
+  return (dispatch) => {
+    dispatch(fetchSearchStart());
+    BooksAPI.search(query).then((results) => {
+      if (results) {
+        if (results.length === 0) {
+          dispatch(fetchSearchSuccess([]));
+        } else if (results.length > 0) {
+          const res = results.map((book) => correctShelf(book));
+          dispatch(fetchSearchSuccess(res));
+        } else {
+          dispatch(fetchSearchSuccess([]));
+        }
+      } else {
+        dispatch(fetchSearchSuccess([]));
+      }
+    });
+  };
+};

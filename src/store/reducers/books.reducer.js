@@ -52,6 +52,12 @@ const booksReducer = (state = INITIAL_STATE, action) => {
       return updateObject(state, {
         [action.shelf]: newShelf,
       });
+    case actionTypes.FETCH_SEARCH_START:
+      return state;
+    case actionTypes.FETCH_SEARCH_SUCCESS:
+      return updateObject(state, { showingBooks: action.showingBooks });
+    case actionTypes.FETCH_SEARCH_FAIL:
+      return updateObject(state, { error: action.error });
     case actionTypes.SEARCH_RESET:
       return updateObject(state, { showingBooks: [] });
     default:

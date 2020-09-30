@@ -6,7 +6,7 @@ import * as actions from '../../store/actions/books.actions';
 import { SearchCtr, QueryCtr, HomeIconCtr } from './Search.styles';
 
 const Search = (props) => {
-  const { searchReset, books } = props;
+  const { searchReset, searchResults, books } = props;
 
   return (
     <SearchCtr>
@@ -14,8 +14,7 @@ const Search = (props) => {
       <QueryCtr
         type="text"
         onChange={(event) => {
-          // updateSearch(event.target.value);
-          console.log(event.target.value);
+          searchResults(event.target.value);
         }}
         placeholder="Type in book, author, or genre"
       />
@@ -35,6 +34,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    searchResults: (query) => dispatch(actions.fetchSearchResults(query)),
     searchReset: () => dispatch(actions.searchReset()),
   };
 };
