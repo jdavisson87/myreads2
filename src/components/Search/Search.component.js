@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import Books from '../../container/Books/Books.container';
@@ -8,13 +8,25 @@ import { SearchCtr, QueryCtr, HomeIconCtr } from './Search.styles';
 const Search = (props) => {
   const { searchReset, searchResults, books } = props;
 
+  const [query, setQuery] = useState('');
+
+  useEffect(
+    () => {
+      const timer = setTimeout(() => {
+        searchResults(query);
+      }, 1000);
+      return () => clearTimeout(timer);
+    },
+    [query]
+  );
+
   return (
     <SearchCtr>
       <p>Search for books</p>
       <QueryCtr
         type="text"
         onChange={(event) => {
-          searchResults(event.target.value);
+          setQuery(event.target.value);
         }}
         placeholder="Type in book, author, or genre"
       />
