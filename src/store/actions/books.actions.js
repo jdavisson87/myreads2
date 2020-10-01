@@ -13,7 +13,7 @@ export const fetchBooksStart = () => ({
 
 export const fetchBooksSuccess = (books) => ({
   type: actionTypes.FETCH_BOOKS_SUCCESS,
-  // books: books.books,
+  books: books.books,
   want: books.want,
   current: books.current,
   read: books.read,
@@ -43,7 +43,7 @@ const filterBooks = (books) => {
   const want = books.filter((book) => book.shelf === 'wantToRead');
   const read = books.filter((book) => book.shelf === 'read');
   return {
-    // books: books,
+    books: books,
     want: want,
     current: current,
     read: read,
@@ -52,10 +52,10 @@ const filterBooks = (books) => {
 
 export const updateShelves = (book, newShelf) => {
   return (dispatch) => {
-    if (book.shelf === undefined) {
-      book.shelf = 'none';
-    }
-    if (book.shelf === 'none') {
+    // if (book.shelf === undefined) {
+    //   book.shelf = 'none';
+    // }
+    if (book.shelf === 'none' || book.shelf === undefined) {
       book.shelf = newShelf;
       BooksAPI.update(book, newShelf).then(() => {
         const stateShelf = shelfSelector(newShelf);
@@ -123,29 +123,21 @@ export const fetchSearchFail = (err) => ({
   error: err,
 });
 
-const correctShelf = (book) => {
-  if (!book.shelf) {
-    book.shelf = 'none';
-  }
-  return book;
-};
-
 export const fetchSearchResults = (query) => {
   return (dispatch) => {
     dispatch(fetchSearchStart());
-    BooksAPI.search(query).then((results) => {
-      if (results) {
-        if (results.length === 0) {
+    if (query && query.length > 0) {
+      BooksAPI.search(query).then((results) => {
+        if (results.length < 1 && results) {
           dispatch(fetchSearchSuccess([]));
         } else if (results.length > 0) {
-          const res = results.map((book) => correctShelf(book));
-          dispatch(fetchSearchSuccess(res));
+          dispatch(fetchSearchSuccess(results));
         } else {
           dispatch(fetchSearchSuccess([]));
         }
-      } else {
-        dispatch(fetchSearchSuccess([]));
-      }
-    });
+      });
+    } else {
+      dispatch(fetchSearchSuccess([]));
+    }
   };
 };

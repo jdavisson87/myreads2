@@ -2,13 +2,19 @@ import { updateObject } from '../../utils/utility';
 import * as actionTypes from '../actions/actionTypes';
 
 const INITIAL_STATE = {
-  // books: [],
+  books: [],
   current: [],
   want: [],
   read: [],
   showingBooks: [],
   isLoading: false,
   error: null,
+};
+
+const correctShelf = (bookState, book) => {
+  const bookOnShelf = bookState.filter((b) => b.id === book.id)[0];
+  book.shelf = bookOnShelf ? bookOnShelf.shelf : 'none';
+  return book;
 };
 
 const booksReducer = (state = INITIAL_STATE, action) => {
@@ -19,9 +25,9 @@ const booksReducer = (state = INITIAL_STATE, action) => {
       const fetchedWant = state.want.concat(action.want);
       const fetchedCurrent = state.current.concat(action.current);
       const fetchedRead = state.read.concat(action.read);
-      // const fetchedBooks = state.books.concat(action.books);
+      const fetchedBooks = state.books.concat(action.books);
       const filteredState = {
-        // books: fetchedBooks,
+        books: fetchedBooks,
         current: fetchedCurrent,
         want: fetchedWant,
         read: fetchedRead,
@@ -55,7 +61,10 @@ const booksReducer = (state = INITIAL_STATE, action) => {
     case actionTypes.FETCH_SEARCH_START:
       return state;
     case actionTypes.FETCH_SEARCH_SUCCESS:
-      return updateObject(state, { showingBooks: action.showingBooks });
+      const res = action.showingBooks.map((book) =>
+        correctShelf(state.books, book)
+      );
+      return updateObject(state, { showingBooks: res });
     case actionTypes.FETCH_SEARCH_FAIL:
       return updateObject(state, { error: action.error });
     case actionTypes.SEARCH_RESET:
